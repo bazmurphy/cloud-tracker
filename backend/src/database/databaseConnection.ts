@@ -10,9 +10,9 @@ export const database = new Pool({
   // Set it to false to disable SSL/TLS verification.
   // Need this when connecting from a Local API to a Render PostgreSQL Database
   // REMOVE when the API is on Render
-  // ssl: {
-  //   rejectUnauthorized: false,
-  // },
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 database.connect((error, client) => {
