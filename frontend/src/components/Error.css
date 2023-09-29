@@ -1,0 +1,44 @@
+.error-container {
+  display: grid;
+  justify-items: center;
+  row-gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  background-color: hsla(0, 0%, 100%, 0.5);
+  border: 1px solid hsla(0, 0%, 100%, 0.75);
+}
+
+.error-subcontainer {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.error-image {
+  filter: drop-shadow(2px 2px 4px black);
+}
+
+.error-message {
+  font-size: 1rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0px 0px 1px black;
+  filter: drop-shadow(1px 1px 2px black);
+}
+
+.error-details {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.error-retry-button {
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  background-color: hsl(0, 0%, 100%, 0.75);
+  border: 2px solid hsl(0, 0%, 100%, 1);
+}
+
+.error-retry-button:hover {
+  background-color: hsl(0, 0%, 100%, 0.9);
+}

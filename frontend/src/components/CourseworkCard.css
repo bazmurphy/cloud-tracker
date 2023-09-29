@@ -1,0 +1,54 @@
+.coursework-card {
+  display: grid;
+  row-gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: hsla(0, 0%, 100%, 0.5);
+  border: 1px solid hsla(0, 0%, 100%, 0.75);
+}
+
+.coursework-card-id-container {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+}
+
+.coursework-card-description {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "image part-one"
+    "part-two part-two";
+  align-items: center;
+  column-gap: 0.5rem;
+  row-gap: 0.25rem;
+}
+
+.coursework-card-image {
+  grid-area: image;
+  height: 2rem;
+}
+
+.courseword-card-description-part-one {
+  grid-area: part-one;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.courseword-card-description-part-two {
+  grid-area: part-two;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.coursework-card-trainees-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  row-gap: 0.5rem;
+}
+
+@media screen and (min-width: 600px) {
+  .coursework-card-description {
+    grid-template-columns: auto auto 1fr;
+    grid-template-areas: "image part-one part-two";
+  }
+}

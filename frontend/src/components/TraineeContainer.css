@@ -1,0 +1,17 @@
+.coursework-card-trainee-container {
+  border-left: 2px solid hsla(0, 0%, 100%, 0.75);
+  padding: 0 0.5rem;
+}
+
+.coursework-card-trainee-name-container {
+  display: grid;
+}
+
+.coursework-card-trainee-name-first {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.coursework-card-trainee-name-last {
+  font-size: 0.8rem;
+}

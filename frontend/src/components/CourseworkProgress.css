@@ -1,0 +1,47 @@
+.coursework-progress-container {
+  display: grid;
+}
+
+.coursework-progress-interactive-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.2rem;
+}
+
+.coursework-progress-interactive-label {
+  font-size: 0.8rem;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.checkbox-in-progress {
+  accent-color: hsl(240, 100%, 50%);
+}
+
+.checkbox-need-help {
+  accent-color: hsl(22, 100%, 50%);
+}
+
+.checkbox-completed {
+  accent-color: hsl(120, 100%, 50%);
+}
+
+.progress-bar {
+  border-radius: 2px;
+  height: 6px;
+  /* border: 1px solid hsla(0, 0%, 0%, 0.15); */
+}
+
+.progress-bar-in-progress {
+  background: linear-gradient(90deg, hsl(240, 100%, 50%) 50%, transparent 100%);
+}
+
+.progress-bar-need-help {
+  background: linear-gradient(90deg, hsl(22, 100%, 50%) 50%, transparent 100%);
+}
+
+.progress-bar-completed {
+  background: linear-gradient(90deg, hsl(120, 100%, 50%) 50%, transparent 100%);
+}
