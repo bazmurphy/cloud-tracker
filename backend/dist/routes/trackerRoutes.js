@@ -7,7 +7,6 @@ exports.trackerRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const trackerController_1 = require("../controllers/trackerController");
 exports.trackerRouter = express_1.default.Router();
-exports.trackerRouter.get("/", trackerController_1.rootRoute);
 exports.trackerRouter.get("/trainees", trackerController_1.getAllTrainees);
 exports.trackerRouter.get("/weeks", trackerController_1.getAllWeeks);
 exports.trackerRouter.get("/coursework", trackerController_1.getAllCoursework);

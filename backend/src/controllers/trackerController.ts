@@ -1,11 +1,5 @@
-import path from "path";
 import { database } from "../database/databaseConnection";
 import { Request, Response } from "express";
-
-export const rootRoute = async (req: Request, res: Response) => {
-  const indexPath = path.join(__dirname, "../public/index.html");
-  res.sendFile(indexPath);
-};
 
 export const getAllTrainees = async (req: Request, res: Response) => {
   try {

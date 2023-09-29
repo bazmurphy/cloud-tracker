@@ -1,11 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.putSpecificTraineeSpecificCoursework = exports.getSpecificTraineeSpecificCoursework = exports.getAllTraineeCoursework = exports.getAllCoursework = exports.getAllWeeks = exports.getAllTrainees = exports.rootRoute = void 0;
+exports.putSpecificTraineeSpecificCoursework = exports.getSpecificTraineeSpecificCoursework = exports.getAllTraineeCoursework = exports.getAllCoursework = exports.getAllWeeks = exports.getAllTrainees = void 0;
 const databaseConnection_1 = require("../database/databaseConnection");
-const rootRoute = async (req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
-};
-exports.rootRoute = rootRoute;
 const getAllTrainees = async (req, res) => {
     try {
         const queryAllTrainees = await databaseConnection_1.database.query(`SELECT *

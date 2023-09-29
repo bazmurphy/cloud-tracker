@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  rootRoute,
   getAllTrainees,
   getAllWeeks,
   getAllCoursework,
@@ -11,7 +10,6 @@ import {
 
 export const trackerRouter = express.Router();
 
-trackerRouter.get("/", rootRoute);
 trackerRouter.get("/trainees", getAllTrainees);
 trackerRouter.get("/weeks", getAllWeeks);
 trackerRouter.get("/coursework", getAllCoursework);
