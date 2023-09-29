@@ -3,26 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="cloud.png" />
+    <link rel="icon" type="image/svg+xml" href="images/cloud.png" />
     <link rel="stylesheet" href="style.css" />
-    <title>CloudTracker</title>
+    <title>Cloud Pathway Tracker API</title>
   </head>
   <body>
-    <header>
-      <img src="cloud.png" alt="" />
-      <h1>CloudTracker API</h1>
-    </header>
-    <main>
-      <section>
-        <h2>Routes</h2>
+    <div id="root">
+      <header>
+        <img src="images/cloud.png" alt="cloud" />
+        <h1>Cloud Pathway Tracker API</h1>
+      </header>
+      <main>
+        <div>
+          <img src="images/route.png" alt="route" />
+          <h2>API Routes</h2>
+        </div>
         <ul>
           <li><a href="/">/</a></li>
-          <li><a href="/api/trainees">/api/trainees</a></li>
-          <li><a href="/api/weeks">/api/weeks</a></li>
-          <li><a href="/api/coursework">/api/coursework</a></li>
-          <li><a href="/api/trainee-coursework">/api/trainee-coursework</a></li>
+          <li>
+            <a href="/api/trainees" target="_blank">GET /api/trainees</a>
+          </li>
+          <li><a href="/api/weeks" target="_blank">GET /api/weeks</a></li>
+          <li>
+            <a href="/api/coursework" target="_blank">GET /api/coursework</a>
+          </li>
+          <li>
+            <a href="/api/trainee-coursework" target="_blank"
+              >GET /api/trainee-coursework</a
+            >
+          </li>
+          <li>
+            <a
+              href="/api/trainee-coursework/trainee=1&coursework=1"
+              target="_blank"
+              >GET /api/trainee-coursework/trainee=1&coursework=1</a
+            >
+          </li>
+          <li>
+            <a href="/">PUT /api/trainee-coursework/trainee=1&coursework=1</a>
+          </li>
         </ul>
-      </section>
-    </main>
+      </main>
+    </div>
   </body>
 </html>

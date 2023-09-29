@@ -3,8 +3,8 @@ import "./Header.css";
 function Header() {
   return (
     <header>
-      <img src="./images/cloud.png" alt="" />
-      <h1>Cloud Pathway Tracker L9/L10</h1>
+      <img src="./images/cloud.png" alt="cloud" />
+      <h1>Cloud Pathway Tracker</h1>
     </header>
   );
 }
