@@ -27,6 +27,7 @@ body {
     hsl(198deg 100% 49%) 79%,
     hsl(199deg 100% 44%) 100%
   );
+  background-attachment: fixed;
 }
 
 #root {
