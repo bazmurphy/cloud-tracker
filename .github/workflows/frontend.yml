@@ -27,8 +27,6 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        # run: npm install
-        # ci = clean install
         run: npm ci
 
       - name: Build Frontend
