@@ -9,7 +9,7 @@ on:
     # - "frontend/**"
 
 jobs:
-  build-and-deploy:
+  build-and-deploy-frontend:
     runs-on: ubuntu-latest
 
     # run all the steps in the frontend directory
@@ -42,7 +42,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Delete /assets folder
-        run: aws s3 rm s3://bazmurphy-cloud-tracker/assets/ -- recursive
+        run: aws s3 rm s3://bazmurphy-cloud-tracker/assets/ --recursive
 
       - name: Sync to AWS S3
         run: aws s3 sync ./dist s3://bazmurphy-cloud-tracker
