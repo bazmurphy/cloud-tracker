@@ -19,15 +19,15 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
-          node-version: 18.18
+          node-version: 18
 
       - name: Change to Frontend Directory
         run: cd frontend
 
       - name: Install Dependencies
-        # run: npm install
+        run: npm install
         # npm ci = clean install
-        run: npm ci
+        # run: npm ci
 
       - name: Build Frontend
         run: npm run build
