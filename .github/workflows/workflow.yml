@@ -21,13 +21,10 @@ jobs:
         with:
           node-version: 18
 
-      - name: Change to Frontend Directory
-        run: cd frontend
-
-      - name: Install Dependencies
-        run: npm install
+      - name: Change to Frontend Directory & Install Dependencies
+        run: cd frontend && npm install
         # npm ci = clean install
-        # run: npm ci
+        # run: cd frontend && npm ci
 
       - name: Build Frontend
         run: npm run build
