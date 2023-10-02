@@ -1,0 +1,42 @@
+name: Build and Deploy Backend on EC2
+
+on:
+  push:
+    branches:
+      - main
+    # The workflow should trigger only on changes in the "backend" folder
+    # paths:
+    # - "backend/**"
+
+jobs:
+  build-and-deploy-backend:
+    runs-on: ubuntu-latest
+
+    # run all the steps in the backend directory
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Checkout the Code
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        # run: npm install
+        # ci = clean install
+        run: npm ci
+
+      - name: Build Backend
+        run: npm run build
+
+      - name: Set AWS EC2 Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_EC2}}
+          aws-secret-access-key: ${{ secrets.AWS_EC2_ACCESS_KEY_EC2}}
+          aws-region: us-east1
