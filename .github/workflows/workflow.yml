@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - main
+    # The workflow should trigger only for changes in the "frontend" folder
+    paths:
+      - "frontend/**"
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout the Code
         uses: actions/checkout@v4
@@ -16,6 +20,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
+
+      - name: Change to Frontend Directory
+        run: cd frontend
 
       - name: Install Dependencies
         # run: npm install
