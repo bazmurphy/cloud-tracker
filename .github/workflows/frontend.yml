@@ -6,12 +6,13 @@ on:
       - main
     # The workflow should trigger only for changes in the "frontend" folder
     # paths:
-    #   - "frontend/**"
+    # - "frontend/**"
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    # run all the steps in the frontend directory
     defaults:
       run:
         working-directory: ./frontend
@@ -25,8 +26,10 @@ jobs:
         with:
           node-version: 18
 
-      - name: Change to Frontend Directory & Install Dependencies
-        run: npm install
+      - name: Install Dependencies
+        # run: npm install
+        # ci = clean install
+        run: npm ci
 
       - name: Build Frontend
         run: npm run build
@@ -37,6 +40,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
+      - name: Delete /assets folder
+        run: aws s3 rm s3://bazmurphy-cloud-tracker/assets/ -- recursive
 
       - name: Sync to AWS S3
         run: aws s3 sync ./dist s3://bazmurphy-cloud-tracker
