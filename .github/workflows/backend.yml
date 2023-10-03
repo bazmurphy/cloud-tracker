@@ -34,7 +34,7 @@ jobs:
       - name: Build Backend
         run: npm run build
 
-      - name: SSH into EC2 > delete all pm2 processes > Clear api folder > Upload dist to api folder > start pm2 process
+      - name: SSH into EC2 > delete all pm2 processes > Clear api folder
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -45,7 +45,25 @@ jobs:
             '
               pm2 delete all &&
               rm -rf /api/* &&
-              scp -r ./dist ${{ secrets.SSH_USERNAME }}@${{ secrets.EC2_HOST }}:/api &&
+            '
+      - name: SCP dist to api folder
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "dist"
+          target: "api"
+
+      - name: SSH into EC2 > Start pm2 process (with injected db connection string)
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.EC2_HOST }} 
+            '
               cd /api &&
               pm2 start index.js --name cloudtrackerapi --env DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}"
             '
