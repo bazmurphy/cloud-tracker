@@ -41,15 +41,13 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            pwd &&
             ls -la &&
             pm2 list | grep -q "cloudtrackerapi" && pm2 delete all || true &&
-            rm -rf api &&
-            mkdir api &&
+            rm -rf cloudtracker &&
             ls -la
 
-      - name: Check the contents of working directory (debug)
-        run: ls -la
+      # - name: Check the contents of working directory (debug)
+      #   run: ls -la
 
       - name: SCP dist to api folder
         uses: appleboy/scp-action@v0.1.4
@@ -67,9 +65,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            pwd &&
             ls -la &&
             cd cloudtracker/backend/dist &&
-            pwd &&
             ls -la &&
             pm2 start index.js --name cloudtrackerapi --env DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}"
