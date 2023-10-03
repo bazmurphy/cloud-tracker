@@ -61,4 +61,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            pm2 start "cloudtracker/backend/dist/index.js" --name cloudtrackerapi --env DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}"
+            DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" pm2 start "cloudtracker/backend/dist/index.js" --name cloudtrackerapi
