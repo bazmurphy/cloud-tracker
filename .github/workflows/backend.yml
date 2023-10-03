@@ -44,6 +44,9 @@ jobs:
             pm2 list | grep -q "cloudtrackerapi" && pm2 delete all || true &&
             rm -rf /api/*
 
+      - name: Check the contents of working directory (debug)
+        run: ls -la
+
       - name: SCP dist to api folder
         uses: appleboy/scp-action@v0.1.4
         with:
