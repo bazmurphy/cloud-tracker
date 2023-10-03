@@ -58,7 +58,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "backend/dist/*"
-          target: "/"
+          target: "cloudtracker/"
 
       - name: SSH into EC2 > Start pm2 process (with injected db connection string)
         uses: appleboy/ssh-action@v1.0.0
@@ -69,7 +69,7 @@ jobs:
           script: |
             pwd &&
             ls -la &&
-            cd backend/dist &&
+            cd cloudtracker/backend/dist &&
             pwd &&
             ls -la &&
             pm2 start index.js --name cloudtrackerapi --env DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}"
