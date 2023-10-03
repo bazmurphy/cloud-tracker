@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 
 // Temporary Debug
-console.log(process.env.DB_CONNECTION_STRING);
+console.log("DB_CONNECTION_STRING:", process.env.DB_CONNECTION_STRING);
 
 export const database = new Pool({
   connectionString: process.env.DB_CONNECTION_STRING,
