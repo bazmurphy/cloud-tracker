@@ -53,12 +53,17 @@ header {
 
 header img {
   filter: drop-shadow(2px 2px 4px black);
-  transition: transform 1s;
+  animation: spin 10s linear infinite;
   cursor: pointer;
 }
 
-header img:hover {
-  transform: rotate(360deg);
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 header h1 {
