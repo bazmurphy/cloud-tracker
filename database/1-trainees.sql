@@ -14,3 +14,5 @@ INSERT INTO trainees (trainee_id, first_name, last_name)
 VALUES (4, 'Farzaneh', 'Haghani');
 INSERT INTO trainees (trainee_id, first_name, last_name)
 VALUES (5, 'Baz', 'Murphy');
+INSERT INTO trainees (trainee_id, first_name, last_name)
+VALUES(6, 'Chidimma', 'Ofodum')

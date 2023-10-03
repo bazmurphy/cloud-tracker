@@ -189,3 +189,39 @@ INSERT INTO trainee_coursework (trainee_id, coursework_id)
 VALUES (5, 17);
 INSERT INTO trainee_coursework (trainee_id, coursework_id)
 VALUES (5, 18);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 1);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 2);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 3);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 4);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 5);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 6);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 7);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 8);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 9);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 10);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 11);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 12);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 13);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 14);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 15);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 16);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 17);
+INSERT INTO trainee_coursework (trainee_id, coursework_id)
+VALUES (6, 18);
