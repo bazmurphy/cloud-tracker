@@ -20,7 +20,8 @@ app.get("/", (req, res) => {
   res.sendFile("index.html");
 });
 
-const port = Number(process.env.PORT);
+// const port = Number(process.env.PORT);
+const port = 4000;
 
 app.listen(port, () => {
   console.log(`Server listening on PORT ${port}`);
