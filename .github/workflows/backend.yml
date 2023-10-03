@@ -41,11 +41,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.EC2_HOST }} 
-            '
-              pm2 delete all &&
-              rm -rf /api/* &&
-            '
+            pm2 delete all &&
+            rm -rf /api/*
+
       - name: SCP dist to api folder
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -61,9 +59,5 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.EC2_HOST }} 
-            '
-              cd /api &&
-              pm2 start index.js --name cloudtrackerapi --env DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}"
-            '
+          script: cd /api &&
+            pm2 start index.js --name cloudtrackerapi --env DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}"
