@@ -41,7 +41,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            pm2 delete all &&
+            pm2 list | grep -q "cloudtrackerapi" && pm2 delete all || true &&
             rm -rf /api/*
 
       - name: SCP dist to api folder
