@@ -51,7 +51,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "backend/dist/*"
+          source: "backend/*"
           target: "cloudtracker/"
 
       - name: EC2 SSH > Start PM2 process (with injected db connection string)
