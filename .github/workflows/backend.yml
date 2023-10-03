@@ -1,3 +1,5 @@
+# edit to trigger deploy
+
 name: Build and Deploy Backend on EC2
 
 on:
@@ -6,7 +8,7 @@ on:
       - main
     # The workflow should trigger only on changes in the "backend" folder
     # paths:
-    # - "backend/**"
+    #   - "backend/**"
 
 jobs:
   build-and-deploy-backend:
