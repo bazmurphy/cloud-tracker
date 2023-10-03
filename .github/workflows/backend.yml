@@ -41,8 +41,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            ls -la &&
             pm2 list | grep -q "cloudtrackerapi" && pm2 delete all || true &&
-            rm -rf /api/*
+            rm -r api/*
 
       - name: Check the contents of working directory (debug)
         run: ls -la
@@ -54,7 +55,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "backend/dist/*"
-          target: "api/"
+          target: "/"
 
       - name: SSH into EC2 > Start pm2 process (with injected db connection string)
         uses: appleboy/ssh-action@v1.0.0
@@ -62,5 +63,8 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: cd api &&
+          script: |
+            ls -la &&
+            cd api &&
+            ls -la &&
             pm2 start index.js --name cloudtrackerapi --env DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}"
