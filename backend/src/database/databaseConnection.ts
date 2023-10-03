@@ -1,5 +1,8 @@
 import { Pool } from "pg";
 
+// Temporary Debug
+console.log(process.env.DB_CONNECTION_STRING);
+
 export const database = new Pool({
   connectionString: process.env.DB_CONNECTION_STRING,
   // This property controls whether or not to reject connections that are made to servers with self-signed or invalid SSL certificates.
