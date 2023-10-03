@@ -4,7 +4,8 @@
 }
 
 .coursework-card-trainee-name-container {
-  display: grid;
+  display: flex;
+  flex-direction: column;
 }
 
 .coursework-card-trainee-name-first {
