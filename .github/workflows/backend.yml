@@ -32,9 +32,18 @@ jobs:
       - name: Build Backend
         run: npm run build
 
-      - name: Set AWS EC2 Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: SSH into EC2 > delete all pm2 processes > Clear api folder > Upload dist to api folder > start pm2 process
+        uses: appleboy/ssh-action@v1.0.0
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_EC2 }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_EC2 }}
-          aws-region: us-east-1
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.EC2_HOST }} 
+            '
+              pm2 delete all &&
+              rm -rf /api/* &&
+              scp -r ./dist ${{ secrets.SSH_USERNAME }}@${{ secrets.EC2_HOST }}:/api &&
+              cd /api &&
+              pm2 start index.js --name cloudtrackerapi --env DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}"
+            '
