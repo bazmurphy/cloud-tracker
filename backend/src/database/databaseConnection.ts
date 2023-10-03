@@ -1,11 +1,7 @@
 import { Pool } from "pg";
 
 export const database = new Pool({
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
+  connectionString: process.env.DB_CONNECTION_STRING,
   // This property controls whether or not to reject connections that are made to servers with self-signed or invalid SSL certificates.
   // Set it to false to disable SSL/TLS verification.
   // Need this when connecting from a Local API to a Render PostgreSQL Database
