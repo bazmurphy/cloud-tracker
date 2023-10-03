@@ -53,7 +53,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "dist"
+          source: "backend/dist"
           target: "api"
 
       - name: SSH into EC2 > Start pm2 process (with injected db connection string)
