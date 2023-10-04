@@ -43,12 +43,12 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cd backend 
+          cd backend
           npm ci
 
       - name: Seed PostgreSQL Database
         run: |
-          cd database
+          cd backend
           npm run seed
         env:
           POSTGRES_HOST: localhost
