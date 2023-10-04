@@ -1,4 +1,4 @@
-const { Client } = require("pg");
+import { Client } from "pg";
 
 const pgclient = new Client({
   host: process.env.POSTGRES_HOST,
@@ -8,32 +8,26 @@ const pgclient = new Client({
   database: process.env.POSTGRES_DB,
 });
 
-pgclient.connect();
+await pgclient.connect();
 
-const trainees = `
+const traineesTable = `
 CREATE TABLE trainees (
     trainee_id INT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL
 );`;
 
-pgclient.query(trainees, (err, res) => {
-  if (err) throw err;
-  console.log(res);
-});
+await pgclient.query(traineesTable);
 
-const weeks = `
+const weeksTable = `
 CREATE TABLE weeks (
     week_id INT PRIMARY KEY,
     week_number INT UNIQUE NOT NULL
 );`;
 
-pgclient.query(weeks, (err, res) => {
-  if (err) throw err;
-  console.log(res);
-});
+await pgclient.query(weeksTable);
 
-const coursework = `
+const courseworkTable = `
 CREATE TABLE coursework (
     coursework_id INT PRIMARY KEY NOT NULL,
     week_id INT NOT NULL,
@@ -41,12 +35,9 @@ CREATE TABLE coursework (
     FOREIGN KEY (week_id) REFERENCES weeks(week_id)
 );`;
 
-pgclient.query(coursework, (err, res) => {
-  if (err) throw err;
-  console.log(res);
-});
+await pgclient.query(courseworkTable);
 
-const traineeCoursework = `
+const traineeCourseworkTable = `
 CREATE TABLE trainee_coursework (
     trainee_id INT NOT NULL,
     coursework_id INT NOT NULL,
@@ -58,10 +49,7 @@ CREATE TABLE trainee_coursework (
     FOREIGN KEY (coursework_id) REFERENCES coursework(coursework_id)
 );`;
 
-pgclient.query(traineeCoursework, (err, res) => {
-  if (err) throw err;
-  console.log(res);
-});
+await pgclient.query(traineeCourseworkTable);
 
 const traineesInsert = `
 INSERT INTO trainees (trainee_id, first_name, last_name)
@@ -77,10 +65,7 @@ VALUES (5, 'Baz', 'Murphy');
 INSERT INTO trainees (trainee_id, first_name, last_name)
 VALUES(6, 'Chidimma', 'Ofodum');`;
 
-pgclient.query(traineesInsert, (err, res) => {
-  if (err) throw err;
-  console.log(res);
-});
+await pgclient.query(traineesInsert);
 
 const weeksInsert = `
 INSERT INTO weeks (week_id, week_number)
@@ -94,10 +79,7 @@ VALUES (4, 4);
 INSERT INTO weeks (week_id, week_number)
 VALUES (5, 5);`;
 
-pgclient.query(weeksInsert, (err, res) => {
-  if (err) throw err;
-  console.log(res);
-});
+await pgclient.query(weeksInsert);
 
 const courseworkInsert = `
 INSERT INTO coursework (coursework_id, week_id, description)
@@ -137,10 +119,7 @@ VALUES (17, 5, 'Week 5.4 : Use CloudWatch Metrics to Create Dashboards');
 INSERT INTO coursework (coursework_id, week_id, description)
 VALUES (18, 5, 'Week 5.5 : Update Existing Terraform');`;
 
-pgclient.query(courseworkInsert, (err, res) => {
-  if (err) throw err;
-  console.log(res);
-});
+await pgclient.query(courseworkInsert);
 
 const traineeCourseworkInsert = `
 INSERT INTO trainee_coursework (trainee_id, coursework_id)
@@ -360,14 +339,9 @@ VALUES (6, 17);
 INSERT INTO trainee_coursework (trainee_id, coursework_id)
 VALUES (6, 18);`;
 
-pgclient.query(traineeCourseworkInsert, (err, res) => {
-  if (err) throw err;
-  console.log(res);
-});
+await pgclient.query(traineeCourseworkInsert);
 
-// test query
-pgclient.query("SELECT * FROM trainees", (err, res) => {
-  if (err) throw err;
-  console.log(res.rows);
-  pgclient.end();
-});
+const testQuery = await pgclient.query("SELECT * FROM trainees");
+console.log(testQuery.rows);
+
+await pgclient.end();

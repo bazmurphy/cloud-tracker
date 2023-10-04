@@ -63,6 +63,7 @@ jobs:
           # cannot connect to postgresql on aws rds because only the ec2 instance can access it internally
           # so we need to make a temporary postgresql database on github actions
           DB_CONNECTION_STRING: "postgresql://postgres:password@localhost:5432/cloudtracker"
+          DB_SSL: "false"
         run: |
           cd backend 
           npm run test
@@ -101,4 +102,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" pm2 start "cloudtracker/backend/dist/index.js" --name cloudtrackerapi
+            DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" DB_SSL="true" pm2 start "cloudtracker/backend/dist/index.js" --name cloudtrackerapi
