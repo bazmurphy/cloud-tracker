@@ -5,8 +5,8 @@ on:
     branches:
       - main
     # The workflow should trigger only on changes in the "backend" folder
-    paths:
-      - "backend/**"
+    # paths:
+    #   - "backend/**"
 
 jobs:
   build-and-deploy-backend:
@@ -102,4 +102,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" DB_SSL="true" pm2 start "cloudtracker/backend/dist/index.js" --name cloudtrackerapi
+            DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" DB_SSL="false" pm2 start "cloudtracker/backend/dist/index.js" --name cloudtrackerapi
