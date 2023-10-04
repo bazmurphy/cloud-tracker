@@ -29,6 +29,11 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Test Backend
+        env:
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+        run: npm run test
+
       - name: Build Backend
         run: npm run build
 

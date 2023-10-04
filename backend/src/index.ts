@@ -5,7 +5,7 @@ import morgan from "morgan";
 import path from "path";
 import { trackerRouter } from "./routes/trackerRoutes";
 
-const app = express();
+export const app = express();
 
 app.use(cors());
 app.use(morgan("dev"));
@@ -23,6 +23,6 @@ app.get("/", (req, res) => {
 // const port = Number(process.env.PORT);
 const port = 4000;
 
-app.listen(port, () => {
+export const server = app.listen(port, () => {
   console.log(`Server listening on PORT ${port}`);
 });

@@ -1,4 +1,4 @@
-import { database } from "../database/databaseConnection";
+import { database } from "../database/database";
 import { Request, Response } from "express";
 import {
   Trainee,

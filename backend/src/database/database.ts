@@ -12,8 +12,11 @@ export const database = new Pool({
 
 database.connect((error, client) => {
   if (error) {
-    return console.error("Error acquiring client", error.stack);
+    return console.error(
+      "Error: Could Not Connect To PostgreSQL Database",
+      error.stack
+    );
   }
-  console.log("Successfully connected to the PostgreSQL database");
+  console.log("Success: Connected To PostgreSQL Database");
   client.release();
 });
