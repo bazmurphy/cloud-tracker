@@ -1,10 +1,5 @@
 import { Pool } from "pg";
 
-// Debug
-console.log("DEBUG----------");
-console.log("process.env.DB_SSL:", process.env.DB_SSL);
-console.log("typeof process.env.DB_SSL:", typeof process.env.DB_SSL);
-
 export const database = new Pool({
   connectionString: process.env.DB_CONNECTION_STRING,
   // https://node-postgres.com/features/ssl
