@@ -9,7 +9,7 @@
     "build": "tsc",
     "tscwatch": "tsc --w",
     "test": "jest",
-    "seed": "node src/database/seed.mjs"
+    "seed": "node src/database/seed.js"
   },
   "keywords": [],
   "author": "",
