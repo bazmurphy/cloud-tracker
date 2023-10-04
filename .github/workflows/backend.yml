@@ -13,9 +13,24 @@ jobs:
     runs-on: ubuntu-latest
 
     # run all the steps in the backend directory
-    defaults:
-      run:
-        working-directory: ./backend
+    # defaults:
+    #   run:
+    #     working-directory: ./backend
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: cloudtracker
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout the Code
@@ -27,15 +42,35 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          cd backend 
+          npm ci
+
+      - name: Seed PostgreSQL Database
+        run: |
+          cd database
+          npm run seed
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: cloudtracker
 
       - name: Test Backend
         env:
-          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
-        run: npm run test
+          # DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+          # cannot connect to postgresql on aws rds because only the ec2 instance can access it internally
+          # so we need to make a temporary postgresql database on github actions
+          DB_CONNECTION_STRING: "postgresql://postgres:password@localhost:5432/cloudtracker"
+        run: |
+          cd backend 
+          npm run test
 
       - name: Build Backend
-        run: npm run build
+        run: |
+          cd backend 
+          npm run build
 
       - name: EC2 SSH > Delete the PM2 process > Delete the /cloudtracker/ folder
         uses: appleboy/ssh-action@v1.0.0
