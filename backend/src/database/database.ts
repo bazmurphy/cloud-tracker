@@ -8,7 +8,7 @@ export const database = new Pool({
   connectionString: process.env.DB_CONNECTION_STRING,
   // https://node-postgres.com/features/ssl
   // Enable when Hosted / Disable when Local/Development/Testing
-  ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : false,
+  ssl: process.env.DB_SSL === "true" ? true : false,
 });
 
 database.connect((error, client) => {
