@@ -5,8 +5,8 @@ on:
     branches:
       - main
     # The workflow should trigger only on changes in the "backend" folder
-    paths:
-      - "backend/**"
+    # paths:
+    #   - "backend/**"
 
 jobs:
   build-and-deploy-backend:
