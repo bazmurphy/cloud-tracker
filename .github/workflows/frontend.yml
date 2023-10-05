@@ -29,6 +29,11 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Test Frontend
+        env:
+          VITE_API_URL: "http://ec2-52-90-42-99.compute-1.amazonaws.com/api"
+        run: npm test
+
       - name: Build Frontend
         run: npm run build
 

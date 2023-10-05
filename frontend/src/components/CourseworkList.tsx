@@ -7,7 +7,7 @@ import Error from "./Error";
 
 const CourseworkList = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | undefined>(undefined);
+  const [error, setError] = useState<Error | null>(null);
   const [retry, setRetry] = useState(false);
 
   const [coursework, setCoursework] = useState<Coursework[]>([]);
@@ -15,7 +15,7 @@ const CourseworkList = () => {
   const fetchCoursework = async () => {
     try {
       setIsLoading(true);
-      setError(undefined);
+      setError(null);
 
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/coursework`

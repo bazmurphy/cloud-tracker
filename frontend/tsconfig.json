@@ -18,8 +18,12 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    // NECCESSARY FOR VITEST GLOBALS
+    "types": ["vitest/globals"]
   },
-  "include": ["src"],
+  // neccessary to include vite.setup.ts
+  "include": ["src", "vitest-setup.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
