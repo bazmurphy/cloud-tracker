@@ -73,6 +73,7 @@ jobs:
           INSTANCE_ID: ${{ secrets.INSTANCE_ID_EC2 }}
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
           DB_SSL: "true"
+        # commands accepts an array, each command being "" separated by ,
         run: |
           aws ssm send-command \
             --instance-ids $INSTANCE_ID_EC2 \
