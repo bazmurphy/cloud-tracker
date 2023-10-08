@@ -73,6 +73,7 @@ jobs:
           INSTANCE_ID: ${{ secrets.INSTANCE_ID_EC2 }}
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
           DB_SSL: "true"
+        # ssm requires a policy on the ec2 instance
         run: |
           aws ssm send-command \
             --instance-ids $INSTANCE_ID_EC2 \
