@@ -78,4 +78,4 @@ jobs:
             --instance-ids $INSTANCE_ID_EC2 \
             --document-name "AWS-RunShellScript" \
             --comment "Copy script from repo" \
-            --parameters commands=["cp ./.github/workflows/deploy-backend.sh .", "bash ./deploy-backend.sh -DB_CONNECTION_STRING=$DB_CONNECTION_STRING -DB_SSL=$DB_SSL"]
+            --parameters commands=["cp ./.github/workflows/deploy-backend.sh . && chmod +x deploy-backend.sh && ./deploy-backend.sh -DB_CONNECTION_STRING=$DB_CONNECTION_STRING -DB_SSL=$DB_SSL"]
