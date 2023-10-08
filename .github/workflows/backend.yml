@@ -11,11 +11,10 @@ on:
 jobs:
   build-and-deploy-backend:
     runs-on: ubuntu-latest
-
     # run all the steps in the backend directory
-    # defaults:
-    #   run:
-    #     working-directory: ./backend
+    defaults:
+      run:
+        working-directory: ./backend
 
     services:
       postgres:
@@ -42,14 +41,10 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        run: |
-          cd backend
-          npm ci
+        run: npm ci
 
       - name: Seed PostgreSQL Database
-        run: |
-          cd backend
-          npm run seed
+        run: npm run seed
         env:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
@@ -59,47 +54,28 @@ jobs:
 
       - name: Test Backend
         env:
-          # DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
-          # cannot connect to postgresql on aws rds because only the ec2 instance can access it internally
-          # so we need to make a temporary postgresql database on github actions
           DB_CONNECTION_STRING: "postgresql://postgres:password@localhost:5432/cloudtracker"
           DB_SSL: "false"
-        run: |
-          cd backend 
-          npm run test
+        run: npm run test
 
       - name: Build Backend
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_EC2 }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_EC2 }}
+          aws-region: us-east-1
+
+      - name: Copy then Run "deploy-backend.sh" Script on EC2
+        env:
+          INSTANCE_ID: ${{ secrets.INSTANCE_ID_EC2 }}
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+          DB_SSL: "true"
         run: |
-          cd backend 
-          npm run build
-
-      - name: EC2 SSH > Delete the PM2 process > Delete the /cloudtracker/ folder
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            pm2 list | grep -q "cloudtrackerapi" && pm2 delete all || true &&
-            rm -rf cloudtracker
-
-      # - name: Check the contents of working directory (debug)
-      #   run: ls -la
-
-      - name: EC2 SCP > Copy /backend/dist to /cloudtracker/backend/dist
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "backend/*"
-          target: "cloudtracker/"
-
-      - name: EC2 SSH > Start PM2 process (with injected db connection string)
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" DB_SSL="true" pm2 start "cloudtracker/backend/dist/index.js" --name cloudtrackerapi
+          aws ssm send-command \ 
+          --instance-ids $INSTANCE_ID_EC2
+          --document-name "AWS-RunShellScript" \
+          --comment "Copy script from repo" \
+          --parameters commands=["cp ./.github/workflows/deploy-backend.sh .", "bash ./deploy-backend.sh -DB_CONNECTION_STRING=$DB_CONNECTION_STRING -DB_SSL=$DB_SSL]
