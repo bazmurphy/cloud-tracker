@@ -74,8 +74,8 @@ jobs:
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
           DB_SSL: "true"
         run: |
-          aws ssm send-command \ 
-          --instance-ids $INSTANCE_ID_EC2
-          --document-name "AWS-RunShellScript" \
-          --comment "Copy script from repo" \
-          --parameters commands=["cp ./.github/workflows/deploy-backend.sh .", "bash ./deploy-backend.sh -DB_CONNECTION_STRING=$DB_CONNECTION_STRING -DB_SSL=$DB_SSL]
+          aws ssm send-command \
+            --instance-ids $INSTANCE_ID_EC2 \
+            --document-name "AWS-RunShellScript" \
+            --comment "Copy script from repo" \
+            --parameters commands=["cp ./.github/workflows/deploy-backend.sh .", "bash ./deploy-backend.sh -DB_CONNECTION_STRING=$DB_CONNECTION_STRING -DB_SSL=$DB_SSL"]
