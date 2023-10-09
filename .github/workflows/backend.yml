@@ -76,6 +76,7 @@ jobs:
           aws ssm send-command \
             --instance-ids ${{ secrets.INSTANCE_ID_EC2 }} \
             --document-name "AWS-RunShellScript" \
+            --execution-role-name "CloudTracker-Role-EC2-SSM" \
             --parameters "commands=[
               'pm2 list | grep -q "cloud-tracker-api" && pm2 delete all || true',
               'if [ -d cloud-tracker ]; then rm -rf cloud-tracker; fi',
