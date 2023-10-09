@@ -76,5 +76,4 @@ jobs:
           aws ssm send-command \
             --instance-ids ${{ secrets.INSTANCE_ID_EC2 }} \
             --document-name "AWS-RunShellScript" \
-            --execution-role-name "CloudTracker-Role-EC2-SSM" \
             --parameters "commands=[whoami],workingDirectory=['/home/ec2-user/']"
