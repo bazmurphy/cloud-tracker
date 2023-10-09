@@ -62,7 +62,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_EC2 }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_EC2 }}
-          aws-region: us-east-1
+          aws-region: eu-west-2
 
       - name: Copy then Run "deploy-backend.sh" Script on EC2
         env:
