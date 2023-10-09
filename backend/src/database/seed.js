@@ -6,7 +6,10 @@ const pgclient = new Client({
 });
 
 async function seed() {
+  console.log("Connecting To Database...");
   await pgclient.connect();
+
+  console.log("Creating Tables...");
 
   const traineesTable = `
     CREATE TABLE trainees (
@@ -48,6 +51,10 @@ async function seed() {
     );`;
 
   await pgclient.query(traineeCourseworkTable);
+
+  console.log("Created Tables");
+
+  console.log("Inserting Rows...");
 
   const traineesInsert = `
     INSERT INTO trainees (trainee_id, first_name, last_name)
@@ -339,9 +346,13 @@ async function seed() {
 
   await pgclient.query(traineeCourseworkInsert);
 
+  console.log("Inserted Rows");
+
+  console.log("Test Query:");
   const testQuery = await pgclient.query("SELECT * FROM trainees");
   console.log(testQuery.rows);
 
+  console.log("Disconnecting From Database...");
   await pgclient.end();
 }
 
