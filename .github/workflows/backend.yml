@@ -5,8 +5,8 @@ on:
     branches:
       - main
     # The workflow should trigger only on changes in the "backend" folder
-    # paths:
-    #   - "backend/**"
+    paths:
+      - "backend/**"
 
 jobs:
   build-and-deploy-backend:
@@ -44,13 +44,9 @@ jobs:
         run: npm ci
 
       - name: Seed PostgreSQL Database
-        run: npm run seed
         env:
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: cloudtracker
+          DB_CONNECTION_STRING: "postgresql://postgres:password@localhost:5432/cloudtracker"
+        run: npm run seed
 
       - name: Test Backend
         env:
