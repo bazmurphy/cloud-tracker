@@ -76,4 +76,14 @@ jobs:
           aws ssm send-command \
             --instance-ids ${{ secrets.INSTANCE_ID_EC2 }} \
             --document-name "AWS-RunShellScript" \
-            --parameters "commands=[whoami],workingDirectory=['/home/ec2-user/']"
+            --parameters "commands=[
+              'pm2 list | grep -q "cloud-tracker-api" && pm2 delete all || true',
+              'if [ -d cloud-tracker ]; then rm -rf cloud-tracker; fi',
+              'git clone https://github.com/bazmurphy/cloud-tracker.git',
+              'cd cloud-tracker',
+              'git config --global --add safe.directory /home/ec2-user/cloud-tracker',
+              'cd backend',
+              'npm install',
+              'npm run build',
+              'DB_CONNECTION_STRING="${{secrets.DB_CONNECTION_STRING }}" DB_SSL="true" pm2 start "cloud-tracker/backend/dist/index.js" --name cloud-tracker-api'
+            ],workingDirectory=['/home/ec2-user/']"
