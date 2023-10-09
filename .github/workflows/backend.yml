@@ -64,15 +64,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_EC2 }}
           aws-region: eu-west-2
 
-      - name: Copy then Run "deploy-backend.sh" Script on EC2
+      - name: Run an AWS SSM Send Command Script on EC2
         env:
           INSTANCE_ID: ${{ secrets.INSTANCE_ID_EC2 }}
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
           DB_SSL: "true"
         # ssm requires a policy on the ec2 instance
+        # make a Role with AmazonSSMManagedInstanceCore
+        # go to the EC2 Instance, Actions, Security, Modify IAM Role and apply it
         run: |
           aws ssm send-command \
-            --instance-ids $INSTANCE_ID_EC2 \
+            --instance-ids ${{ secrets.INSTANCE_ID_EC2 }} \
             --document-name "AWS-RunShellScript" \
-            --comment "Copy script from repo" \
-            --parameters commands=["cp ./.github/workflows/deploy-backend.sh . && chmod +x deploy-backend.sh && ./deploy-backend.sh -DB_CONNECTION_STRING=$DB_CONNECTION_STRING -DB_SSL=$DB_SSL"]
+            --parameters "commands=['pwd'],workingDirectory=['/home/ec2-user/cloud-tracker']"
