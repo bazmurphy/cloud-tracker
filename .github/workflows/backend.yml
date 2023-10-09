@@ -77,10 +77,10 @@ jobs:
             --instance-ids ${{ secrets.INSTANCE_ID_EC2 }} \
             --document-name "AWS-RunShellScript" \
             --parameters "commands=[
-              'pm2 list | grep -q "cloud-tracker-api" && pm2 delete all || true'
-              'if [ -d cloud-tracker ]; then rm -rf cloud-tracker; fi'
-              'git clone https://github.com/bazmurphy/cloud-tracker.git'
-              'cd cloud-tracker'
+              'pm2 list | grep -q "cloud-tracker-api" && pm2 delete all || true',
+              'if [ -d cloud-tracker ]; then rm -rf cloud-tracker; fi',
+              'git clone https://github.com/bazmurphy/cloud-tracker.git',
+              'cd cloud-tracker',
               'git config --global --add safe.directory /home/ec2-user/cloud-tracker',
               'cd backend',
               'npm install',
