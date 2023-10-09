@@ -72,9 +72,18 @@ jobs:
         # ssm requires a policy on the ec2 instance
         # make a Role with AmazonSSMManagedInstanceCore
         # go to the EC2 Instance, Actions, Security, Modify IAM Role and apply it
-        # test trigger
         run: |
           aws ssm send-command \
             --instance-ids ${{ secrets.INSTANCE_ID_EC2 }} \
             --document-name "AWS-RunShellScript" \
-            --parameters "commands=['pwd'],workingDirectory=['/home/ec2-user/cloud-tracker']"
+            --parameters "commands=[
+              'pm2 list | grep -q "cloud-tracker-api" && pm2 delete all || true'
+              'if [ -d cloud-tracker ]; then rm -rf cloud-tracker; fi'
+              'git clone https://github.com/bazmurphy/cloud-tracker.git'
+              'cd cloud-tracker'
+              'git config --global --add safe.directory /home/ec2-user/cloud-tracker',
+              'cd backend',
+              'npm install',
+              'npm run build',
+              'DB_CONNECTION_STRING="${{secrets.DB_CONNECTION_STRING }}" DB_SSL="true" pm2 start "cloud-tracker/backend/dist/index.js" --name cloud-tracker-api'
+            ],workingDirectory=['/home/ec2-user/']"
