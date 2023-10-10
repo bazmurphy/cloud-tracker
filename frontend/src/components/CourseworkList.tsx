@@ -17,10 +17,8 @@ const CourseworkList = () => {
       setIsLoading(true);
       setError(null);
 
-      console.log(
-        "import.meta.env.VITE_API_URL:",
-        import.meta.env.VITE_API_URL
-      );
+      const test = import.meta.env.VITE_API_URL;
+      console.log("import.meta.env.VITE_API_URL:", test);
 
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/coursework`
