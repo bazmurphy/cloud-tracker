@@ -8,7 +8,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
 
 # Debug: Check the contents of /usr/share/nginx/html
-RUN ls -l /usr/share/nginx/html
+# RUN ls -l /usr/share/nginx/html
 
 # Start nginx when the container is launched
 CMD ["nginx", "-g", "daemon off;"]
