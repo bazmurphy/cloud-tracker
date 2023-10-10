@@ -28,8 +28,8 @@ ENV DB_CONNECTION_STRING=$DB_CONNECTION_STRING
 ENV DB_SSL=$DB_SSL
 
 # Debug: Print the value of DB_CONNECTION_STRING and DB_SSL before starting
-# RUN echo "DB_CONNECTION_STRING is $DB_CONNECTION_STRING"
-# RUN echo "DB_SSL is $DB_SSL"
+RUN echo "DB_CONNECTION_STRING is $DB_CONNECTION_STRING"
+RUN echo "DB_SSL is $DB_SSL"
 
 # run the Expess application
 CMD ["npm", "start"]

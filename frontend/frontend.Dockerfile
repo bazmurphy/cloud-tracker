@@ -20,7 +20,7 @@ ARG VITE_API_URL
 ENV VITE_API_URL=$VITE_API_URL
 
 # Debug: Print the value of VITE_API_URL during the build process
-# RUN echo "VITE_API_URL is $VITE_API_URL"
+RUN echo "VITE_API_URL is $VITE_API_URL"
 
 # run the typescript compiler to output to /dist/
 RUN npm run build

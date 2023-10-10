@@ -10,8 +10,8 @@ ENV POSTGRES_USER=$POSTGRES_USER
 ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 
 # Debug: Print the value of POSTGRES_USER and POSTGRES_PASSWORD
-# RUN echo "POSTGRES_USER is $POSTGRES_USER"
-# RUN echo "POSTGRES_PASSWORD is $POSTGRES_PASSWORD"
+RUN echo "POSTGRES_USER is $POSTGRES_USER"
+RUN echo "POSTGRES_PASSWORD is $POSTGRES_PASSWORD"
 
 # copy the initialise sql to a specific directory to be able to initialise the database
 COPY initialise.sql /docker-entrypoint-initdb.d/
