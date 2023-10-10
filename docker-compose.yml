@@ -33,7 +33,7 @@ services:
       args:
         - VITE_API_URL=${VITE_API_URL}
     volumes:
-      - ./frontend/dist:/usr/share/nginx/html
+      - frontend-dist:/frontend/dist
 
   nginx:
     depends_on:
@@ -41,6 +41,8 @@ services:
     build:
       context: .
       dockerfile: nginx.Dockerfile
+    volumes:
+      - frontend-dist:/usr/share/nginx/html
     ports:
       - "80:80"
 #
@@ -55,3 +57,7 @@ services:
 # -e pass environment variables
 
 # docker-compose up -d -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e DB_CONNECTION_STRING="postgres://postgres:password@localhost/cloudtracker" -e DB_SSL=true
+
+# --build forces it to rebuild the images
+
+# docker-compose up -d --build
