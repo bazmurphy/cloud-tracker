@@ -10,6 +10,9 @@ import {
 
 export const trackerRouter = express.Router();
 
+trackerRouter.get("/", (req, res) => {
+  res.sendFile("index.html");
+});
 trackerRouter.get("/trainees", getAllTrainees);
 trackerRouter.get("/weeks", getAllWeeks);
 trackerRouter.get("/coursework", getAllCoursework);

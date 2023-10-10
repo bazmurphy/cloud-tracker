@@ -16,10 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", trackerRouter);
 
-app.get("/", (req, res) => {
-  res.sendFile("index.html");
-});
-
 // const port = Number(process.env.PORT);
 const port = 4000;
 
