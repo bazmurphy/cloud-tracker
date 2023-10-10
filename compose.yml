@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  database:
+    build:
+      context: ./database
+      args:
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+
+  backend:
+    depends_on:
+      - database
+    build:
+      context: ./backend
+      args:
+        - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
+        - DB_SSL=${DB_SSL}
+    ports:
+      - "4000:4000"
+
+  frontend:
+    depends_on:
+      - backend
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+    ports:
+      - "80:80"
+#
+#
+# Docker Compose Command to run everything (database, backend, frontend)
+
+# -d runs the contains in detached mode
+# without -e it automatically reads the .env file for the environment variables because of the ${} syntax above
+
+# docker-compose up -d
+
+# -e pass environment variables
+
+# docker-compose up -d -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e DB_CONNECTION_STRING="postgres://postgres:password@localhost/cloudtracker" -e DB_SSL=true
