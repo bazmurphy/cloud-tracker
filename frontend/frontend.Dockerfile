@@ -1,5 +1,5 @@
 # use node version 18, give it an alias to reference later for nginx
-FROM node:18-alpine AS frontend-build
+FROM node:18-alpine
 
 # start from the /frontend folder
 WORKDIR /frontend
@@ -24,21 +24,6 @@ RUN npm run build
 
 # Debug: Print the value of VITE_API_URL during the build process
 # RUN echo "VITE_API_URL is $VITE_API_URL"
-
-# use nginx
-FROM nginx:alpine
-
-# copy across the /dist/ folder from the alias referenced above to the directory where nginx looks for web content
-COPY --from=frontend-build /frontend/dist /usr/share/nginx/html
-
-# expose port 80 (http)
-EXPOSE 80
-
-# run nginx with:
-# -g global configuration flag
-# daemon off - run in the foreground as a single process NOT the background
-# because Docker expects the main process of a container to run in the foreground
-CMD ["nginx", "-g", "daemon off;"]
 
 
 # Docker Build Command to build the Image:

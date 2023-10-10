@@ -4,6 +4,7 @@ services:
   database:
     build:
       context: ./database
+      dockerfile: database.Dockerfile
       args:
         - POSTGRES_USER=${POSTGRES_USER}
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -15,6 +16,7 @@ services:
       - database
     build:
       context: ./backend
+      dockerfile: backend.Dockerfile
       args:
         - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
         - DB_SSL=${DB_SSL}
@@ -23,11 +25,22 @@ services:
 
   frontend:
     depends_on:
+      - database
       - backend
     build:
       context: ./frontend
+      dockerfile: frontend.Dockerfile
       args:
         - VITE_API_URL=${VITE_API_URL}
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html
+
+  nginx:
+    depends_on:
+      - frontend
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
     ports:
       - "80:80"
 #

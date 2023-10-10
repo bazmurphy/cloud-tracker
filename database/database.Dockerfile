@@ -1,5 +1,5 @@
 # use the latest postgres image
-FROM postgres:latest
+FROM postgres:15-alpine
 
 # define the arguments being passed to the Docker Run Command
 ARG POSTGRES_USER
