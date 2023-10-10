@@ -26,7 +26,7 @@ ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
 
 # Debug: Check the contents of /frontend/dist
-RUN ls -l /dist
+RUN ls -l /frontend/dist
 
 # Docker Build Command to build the Image:
 # -t is the name of image
