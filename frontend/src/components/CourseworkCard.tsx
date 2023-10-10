@@ -11,7 +11,9 @@ const CourseworkCard = ({ courseworkItem }: CourseworkCardProps) => {
 
   const fetchTraineeCoursework = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/trainees`);
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/trainees`
+      );
       if (!response.ok) {
         throw response;
       }

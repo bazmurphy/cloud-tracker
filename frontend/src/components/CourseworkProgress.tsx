@@ -21,7 +21,7 @@ const CourseworkProgress = ({
       const response = await fetch(
         `${
           import.meta.env.VITE_API_URL
-        }/trainee-coursework/trainee=${traineeId}&coursework=${courseworkId}`
+        }/api/trainee-coursework/trainee=${traineeId}&coursework=${courseworkId}`
       );
       // console.log("getTraineeCourseworkProgress response:", response);
 
@@ -58,7 +58,7 @@ const CourseworkProgress = ({
       const response = await fetch(
         `${
           import.meta.env.VITE_API_URL
-        }/trainee-coursework/trainee=${traineeId}&coursework=${courseworkId}`,
+        }/api/trainee-coursework/trainee=${traineeId}&coursework=${courseworkId}`,
         {
           method: "PUT",
           headers: {
