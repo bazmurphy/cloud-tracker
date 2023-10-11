@@ -145,10 +145,10 @@ a:hover {
   padding: 0.5rem;
 }
 
-.response .response-success {
-  color: darkblue;
+.response-success {
+  color: hsl(198, 97%, 20%);
 }
 
 .response-error {
-  color: red;
+  color: hsl(0, 100%, 30%);
 }
