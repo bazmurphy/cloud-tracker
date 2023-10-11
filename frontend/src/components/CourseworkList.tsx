@@ -17,16 +17,7 @@ const CourseworkList = () => {
       setIsLoading(true);
       setError(null);
 
-      // const test = import.meta.env.VITE_API_URL;
-      // console.log("import.meta.env.VITE_API_URL:", test);
-
-      // const response = await fetch(
-      //   `${import.meta.env.VITE_API_URL}/api/coursework`
-      // );
-
-      const response = await fetch(
-        `http://ec2-13-40-185-17.eu-west-2.compute.amazonaws.com:4000/api/coursework`
-      );
+      const response = await fetch(`/api/coursework`);
       console.log("fetchCoursework response:", response);
 
       if (!response.ok) {

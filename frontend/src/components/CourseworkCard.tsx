@@ -11,14 +11,13 @@ const CourseworkCard = ({ courseworkItem }: CourseworkCardProps) => {
 
   const fetchTraineeCoursework = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/trainees`
-      );
+      const response = await fetch(`/api/trainees`);
+      // console.log("fetchTraineeCoursework response:", response);
       if (!response.ok) {
         throw response;
       }
       const data = await response.json();
-      // console.log("fetchTraineeCoursework:", data);
+      // console.log("fetchTraineeCoursework data:", data);
       setTrainees(data.payload);
     } catch (error) {
       console.log("catch block error:", error);
