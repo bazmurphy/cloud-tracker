@@ -13,6 +13,8 @@ services:
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
+    volumes:
+      - database-data:/var/lib/postgres/data
 
   backend:
     container_name: backend
@@ -70,6 +72,9 @@ services:
       # - VITE_API_URL=${VITE_API_URL}
     ports:
       - "80:80"
+
+volumes:
+  database-data:
 #
 #
 # Define the Named Volume "frontend-dist"
