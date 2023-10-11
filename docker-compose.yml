@@ -2,6 +2,9 @@ version: "3"
 
 services:
   database:
+    container_name: database
+    # networks:
+    #   - cloud-tracker-network
     build:
       context: ./database
       dockerfile: database.Dockerfile
@@ -12,6 +15,9 @@ services:
       - "5432:5432"
 
   backend:
+    container_name: backend
+    # networks:
+    #   - cloud-tracker-network
     depends_on:
       - database
     build:
@@ -23,32 +29,55 @@ services:
     ports:
       - "4000:4000"
 
+  # frontend:
+  #   container_name: frontend
+  #   depends_on:
+  #     - database
+  #     - backend
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: frontend.Dockerfile
+  #     args:
+  #       - VITE_API_URL=${VITE_API_URL}
+  # volumes:
+  # - frontend-dist:/frontend/dist
+
+  # nginx:
+  #   container_name: nginx
+  #   # networks:
+  #   #   - cloud-tracker-network
+  #   depends_on:
+  #     - frontend
+  #   build:
+  #     context: ./nginx
+  #     dockerfile: nginx.Dockerfile
+  #     # args:
+  #     #   - FRONTEND_DIST=./frontend/dist
+  #   # volumes:
+  #   # - frontend-dist:/usr/share/nginx/html
+  #   ports:
+  #     - "80:80"
+
   frontend:
+    container_name: frontend
     depends_on:
       - database
       - backend
     build:
       context: ./frontend
       dockerfile: frontend.Dockerfile
-      args:
-        - VITE_API_URL=${VITE_API_URL}
-    volumes:
-      - frontend-dist:/frontend/dist
-
-  nginx:
-    depends_on:
-      - frontend
-    build:
-      context: .
-      dockerfile: nginx.Dockerfile
-    volumes:
-      - frontend-dist:/usr/share/nginx/html
+      # args:
+      # - VITE_API_URL=${VITE_API_URL}
     ports:
       - "80:80"
-
+#
+#
 # Define the Named Volume "frontend-dist"
-volumes:
-  frontend-dist:
+# volumes:
+# frontend-dist:
+
+# networks:
+#   cloud-tracker-network:
 #
 #
 # Docker Compose Command to run everything (database, backend, frontend)
@@ -64,4 +93,8 @@ volumes:
 
 # --build forces it to rebuild the images
 
-# docker-compose up -d --build
+# docker-compose up -d --build --force-recreate
+
+# --force-recreate
+
+# docker-compose up -d --build --force-recreate
