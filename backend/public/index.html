@@ -14,37 +14,42 @@
         <h1>Cloud Pathway Tracker API</h1>
       </header>
       <main>
-        <div>
-          <img src="images/route.png" alt="route" />
-          <h2>API Routes</h2>
-        </div>
-        <ul>
-          <li><a href="/">/</a></li>
-          <li>
-            <a href="/api/trainees" target="iframe">GET /api/trainees</a>
-          </li>
-          <li><a href="/api/weeks" target="iframe">GET /api/weeks</a></li>
-          <li>
-            <a href="/api/coursework" target="iframe">GET /api/coursework</a>
-          </li>
-          <li>
-            <a href="/api/trainee-coursework" target="iframe"
-              >GET /api/trainee-coursework</a
-            >
-          </li>
-          <li>
-            <a
-              href="/api/trainee-coursework/trainee=1&coursework=1"
-              target="iframe"
-              >GET /api/trainee-coursework/trainee=1&coursework=1</a
-            >
-          </li>
-          <li>
-            <a href="#">PUT /api/trainee-coursework/trainee=1&coursework=1</a>
-          </li>
-        </ul>
-        <iframe name="iframe"></iframe>
+        <section class="routes-section">
+          <div class="routes-header">
+            <img src="images/route.png" alt="route" class="routes-image" />
+            <h2 class="routes-title">API Routes</h2>
+          </div>
+          <ul>
+            <li>
+              <a href="/api/trainees" class="api-link">GET /api/trainees</a>
+            </li>
+            <li><a href="/api/weeks" class="api-link">GET /api/weeks</a></li>
+            <li>
+              <a href="/api/coursework" class="api-link">GET /api/coursework</a>
+            </li>
+            <li>
+              <a href="/api/trainee-coursework" class="api-link"
+                >GET /api/trainee-coursework</a
+              >
+            </li>
+            <li>
+              <a
+                href="/api/trainee-coursework/trainee=1&coursework=1"
+                class="api-link"
+                >GET /api/trainee-coursework/trainee=1&coursework=1</a
+              >
+            </li>
+            <li>
+              <a href="#">PUT /api/trainee-coursework/trainee=1&coursework=1</a>
+            </li>
+          </ul>
+        </section>
+        <section class="response-section">
+          <h2 class="response-title">Response</h2>
+          <div id="response-container"></div>
+        </section>
       </main>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>
