@@ -31,6 +31,23 @@ services:
     ports:
       - "4000:4000"
 
+  frontend:
+    container_name: frontend
+    # networks:
+    #   - cloud-tracker-network
+    depends_on:
+      - database
+      - backend
+    build:
+      context: ./frontend
+      dockerfile: frontend.Dockerfile
+      # args:
+      # - VITE_API_URL=${VITE_API_URL}
+    ports:
+      - "80:80"
+
+  # ATTEMPT TO SEPARATE frontend and nginx (best practise?):
+
   # frontend:
   #   container_name: frontend
   #   depends_on:
@@ -60,46 +77,19 @@ services:
   #   ports:
   #     - "80:80"
 
-  frontend:
-    container_name: frontend
-    depends_on:
-      - database
-      - backend
-    build:
-      context: ./frontend
-      dockerfile: frontend.Dockerfile
-      # args:
-      # - VITE_API_URL=${VITE_API_URL}
-    ports:
-      - "80:80"
-
+#
+# Define a Named Volume "database-data" to persist the PostgreSQL database
 volumes:
   database-data:
 #
-#
+
 # Define the Named Volume "frontend-dist"
 # volumes:
 # frontend-dist:
+#
 
+#
+# Define a Network named "cloud-tracker-network"
 # networks:
 #   cloud-tracker-network:
 #
-#
-# Docker Compose Command to run everything (database, backend, frontend)
-
-# -d runs the contains in detached mode
-# without -e it automatically reads the .env file for the environment variables because of the ${} syntax above
-
-# docker-compose up -d
-
-# -e pass environment variables
-
-# docker-compose up -d -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e DB_CONNECTION_STRING="postgres://postgres:password@localhost/cloudtracker" -e DB_SSL=true
-
-# --build forces it to rebuild the images
-
-# docker-compose up -d --build --force-recreate
-
-# --force-recreate
-
-# docker-compose up -d --build --force-recreate

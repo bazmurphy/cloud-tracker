@@ -28,24 +28,20 @@ RUN npm run build
 # Debug: Check the contents of /frontend/dist
 # RUN ls -l /frontend/dist
 
-# keep the container alive for 60 seconds so the nginx container can copy across the dist folder
+# Janky: Keep the container alive for 60 seconds 
+# So the nginx container can copy across the dist folder (when we have a separate nginx container)
 # CMD [ "sh", "-c", "sleep 60" ]
 
-# Get latest nginx Image
+# use the latest nginx Image
 FROM nginx:latest
 
-# Remove the default nginx configuration from the container
+# Remove the default nginx configuration from the container (is this really neccessary?)
 RUN rm /etc/nginx/conf.d/default.conf
 
 # Copy the nginx configuration to the container
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# ARG FRONTEND_DIST
-# COPY $FRONTEND_DIST /usr/share/nginx/html
-
-# RUN echo "FRONTEND_DIST is $FRONTEND_DIST"
-
-# Copy the contents of /dist from the frontend container to the /html of the nginx container
+# Copy the contents of /dist from the alias "frontend-build" (above) to the /html of the nginx container
 COPY --from=frontend-build /frontend/dist /usr/share/nginx/html
 
 # Debug: Check the contents of /usr/share/nginx/html
@@ -56,33 +52,3 @@ EXPOSE 80
 
 # Start nginx when the container is launched
 CMD ["nginx", "-g", "daemon off;"]
-
-
-# Docker Build Command to build the Image:
-# -t is the name of image
-# . is the start location of the build
-
-# docker build -t cloud-tracker-frontend-image .
-
-# from the root directory:
-
-# docker build -t cloud-tracker-frontend-image frontend
-
-
-# Docker Run Command to run a Container using this image:
-
-# -d is detached mode
-# -p is the internal/external port mapping
-# --name is the name of the container
-
-# docker run -d -p 80:80 --name cloud-tracker-frontend-container cloud-tracker-frontend-image
-
-
-# Tag the Image
-
-# docker tag cloud-tracker-frontend-image:latest bazmurphy/cloud-tracker-frontend-image:latest
-
-
-# Push the Image Docker Hub
-
-# docker push bazmurphy/cloud-tracker-frontend-image:latest
