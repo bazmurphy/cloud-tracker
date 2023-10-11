@@ -14,7 +14,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - database-data:/var/lib/postgres/data
+      - database-data:/var/lib/postgresql/data
 
   backend:
     container_name: backend
