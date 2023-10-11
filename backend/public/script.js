@@ -12,7 +12,7 @@ apiLinks.forEach((apiLink) => {
       const data = await response.json();
       const jsonFormatted = JSON.stringify(data, null, 2);
       const preBlock = document.createElement("pre");
-      if (jsonFormatted.includes(`"success: true,`)) {
+      if (jsonFormatted.includes(`"success": true,`)) {
         preBlock.className = "response-success";
       } else if (jsonFormatted.includes(`"error": true,`)) {
         preBlock.className = "response-error";
