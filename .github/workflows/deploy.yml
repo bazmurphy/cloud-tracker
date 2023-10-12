@@ -16,8 +16,6 @@ jobs:
         # this creates a folder and ssh configuration inside the Github Actions Container itself
         run: |
           echo SSH Configuration Started...
-          pwd
-          ls -la
           mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/ec2.key
           chmod 600 ~/.ssh/ec2.key
@@ -28,7 +26,6 @@ jobs:
             IdentityFile ~/.ssh/ec2.key
             StrictHostKeyChecking no
           END
-          ls -la ~/.ssh
           echo SSH Configuration Complete!
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
@@ -36,11 +33,14 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
 
       # we can now run individual ssh commands using the Host
-      - name: Stop the Containers
-        run: ssh ec2 'pwd && cd cloud-tracker && docker-compose down'
 
-      - name: Pull from Github
-        run: ssh ec2 'pwd && cd cloud-tracker && git pull'
+      - name: Stop the Containers
+        run: ssh ec2 'cd cloud-tracker && docker-compose down'
+
+      - name: Pull the latest code from Github
+        run: ssh ec2 'cd cloud-tracker && git pull'
 
       - name: Restart the Containers
-        run: ssh ec2 'pwd && cd cloud-tracker && docker-compose up -d --build' # might need to pass in -e environment variables also look into secrets
+        # might need to pass in -e environment variables (also look into secrets)
+        # also removed --build flag
+        run: ssh ec2 'cd cloud-tracker && docker-compose up -d'
