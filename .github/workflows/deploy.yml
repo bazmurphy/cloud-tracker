@@ -15,6 +15,7 @@ jobs:
       - name: Configure SSH on the GitHub Actions Container (Without Using A Third Party Action!)
         # this creates a folder and ssh configuration inside the Github Actions Container itself
         run: |
+          echo SSH Configuration Started...
           pwd
           ls -la
           mkdir -p ~/.ssh
@@ -27,7 +28,8 @@ jobs:
             IdentityFile ~/.ssh/ec2.key
             StrictHostKeyChecking no
           END
-          ls la ~/.ssh
+          ls -la ~/.ssh
+          echo SSH Configuration Complete!
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
