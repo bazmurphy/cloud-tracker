@@ -27,6 +27,7 @@ jobs:
             IdentityFile ~/.ssh/ec2.key
             StrictHostKeyChecking no
           END
+          ls la ~/.ssh
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
@@ -34,10 +35,10 @@ jobs:
 
       # we can now run individual ssh commands using the Host
       - name: Stop the Containers
-        run: ssh ec2 'docker-compose down'
+        run: ssh ec2 'pwd && cd cloud-tracker && docker-compose down'
 
       - name: Pull from Github
-        run: ssh ec2 'git pull'
+        run: ssh ec2 'pwd && cd cloud-tracker && git pull'
 
       - name: Restart the Containers
-        run: ssh ec2 'docker-compose up -d --build' # might need to pass in -e environment variables also look into secrets
+        run: ssh ec2 'pwd && cd cloud-tracker && docker-compose up -d --build' # might need to pass in -e environment variables also look into secrets
