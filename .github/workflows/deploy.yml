@@ -17,7 +17,7 @@ jobs:
         run: |
           pwd
           ls -la
-          mkdir -p ~./ssh/
+          mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/ec2.key
           chmod 600 ~/.ssh/ec2.key
           cat >>~/.ssh/config <<END
