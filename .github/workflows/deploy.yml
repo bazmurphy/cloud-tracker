@@ -15,6 +15,8 @@ jobs:
       - name: Configure SSH on the GitHub Actions Container (Without Using A Third Party Action!)
         # this creates a folder and ssh configuration inside the Github Actions Container itself
         run: |
+          pwd
+          ls -la
           mkdir -p ~./ssh/
           echo "$SSH_KEY" > ~/.ssh/ec2.key
           chmod 600 ~/.ssh/ec2.key
