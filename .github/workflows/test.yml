@@ -1,0 +1,61 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: cloudtracker
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Backend - Install Dependencies
+        run: cd backend && npm install
+
+      - name: Backend - Seed The Ephemeral PostgreSQL Database
+        env:
+          DB_CONNECTION_STRING: "postgresql://postgres:password@localhost:5432/cloudtracker"
+        run: cd backend && npm run seed
+
+      - name: Backend - Test
+        env:
+          DB_CONNECTION_STRING: "postgresql://postgres:password@localhost:5432/cloudtracker"
+        run: cd backend && npm run test
+
+      - name: Backend - Build Check
+        run: cd backend && npm run build
+
+      - name: Frontend - Install Dependencies
+        run: cd frontend && npm install
+
+      - name: Frontend - Test
+        # the VITE_API_URL was removed and /api/endpoint was hardcoded but how to deal with this?
+        # env:
+        # VITE_API_URL: "http://localhost:4000" # check the behaviour of the GitHub Actions Container re: localhost
+        run: cd frontend && npm run test
+
+      - name: Frontend - Build Check
+        run: cd frontend && npm run build

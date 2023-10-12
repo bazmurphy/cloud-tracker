@@ -1,0 +1,41 @@
+name: Deploy
+
+on:
+  # this will only run if the "Test" workflow completed successfully
+  workflow_run:
+    workflows: ["Test"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure SSH on the GitHub Actions Container (Without Using A Third Party Action!)
+        # this creates a folder and ssh configuration inside the Github Actions Container itself
+        run: |
+          mkdir -p ~./ssh/
+          echo "$SSH_KEY" > ~/.ssh/ec2.key
+          chmod 600 ~/.ssh/ec2.key
+          cat >>~/.ssh/config <<END
+          Host ec2
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/ec2.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+
+      # we can now run individual ssh commands using the Host
+      - name: Stop the Containers
+        run: ssh ec2 'docker-compose down'
+
+      - name: Pull from Github
+        run: ssh ec2 'git pull'
+
+      - name: Restart the Containers
+        run: ssh ec2 'docker-compose up -d --build' # might need to pass in -e environment variables also look into secrets
