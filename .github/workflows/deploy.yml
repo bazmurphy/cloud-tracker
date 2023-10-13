@@ -12,6 +12,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Build the Docker Images
+        run: |
+          docker build -t bazmurphy/cloud-tracker-database:latest database
+          docker build -t bazmurphy/cloud-tracker-backend:latest backend
+          docker build -t bazmurphy/cloud-tracker-frontend:latest frontend
+
+      - name: Login to DockerHub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Push the Docker Images to DockerHub
+        run: |
+          docker push bazmurphy/cloud-tracker-database:latest
+          docker push bazmurphy/cloud-tracker-backend:latest
+          docker push bazmurphy/cloud-tracker-frontend:latest
+
       - name: Configure SSH on the GitHub Actions Container (Without Using A Third Party Action!)
         # this creates a folder and ssh configuration inside the Github Actions Container itself
         run: |
@@ -37,8 +55,11 @@ jobs:
       - name: Stop the Containers
         run: ssh ec2 'cd cloud-tracker && docker-compose down'
 
-      - name: Pull the latest code from Github
-        run: ssh ec2 'cd cloud-tracker && git pull'
+      # - name: Pull the latest code from Github
+      #   run: ssh ec2 'cd cloud-tracker && git pull'
+
+      - name: Pull the latest Docker Images from DockerHub
+        run: docker
 
       - name: Restart the Containers
         # might need to pass in -e environment variables (also look into secrets)
