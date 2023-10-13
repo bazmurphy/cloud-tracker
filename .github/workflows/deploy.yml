@@ -14,14 +14,12 @@ jobs:
     steps:
       - name: Checkout the Code
         uses: actions/checkout@v4
-      
+
       - name: Build the Docker Images
         run: |
-          pwd
-          ls -la
-          docker build -t bazmurphy/cloud-tracker-database:latest database
-          docker build -t bazmurphy/cloud-tracker-backend:latest backend
-          docker build -t bazmurphy/cloud-tracker-frontend:latest frontend
+          docker build -t bazmurphy/cloud-tracker-database:latest /database
+          docker build -t bazmurphy/cloud-tracker-backend:latest /backend
+          docker build -t bazmurphy/cloud-tracker-frontend:latest /frontend
 
       - name: Login to DockerHub
         env:
@@ -37,6 +35,10 @@ jobs:
 
       - name: Configure SSH on the GitHub Actions Container (Without Using A Third Party Action!)
         # this creates a folder and ssh configuration inside the Github Actions Container itself
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
         run: |
           echo SSH Configuration Started...
           mkdir -p ~/.ssh
@@ -50,10 +52,6 @@ jobs:
             StrictHostKeyChecking no
           END
           echo SSH Configuration Complete!
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_KEY: ${{ secrets.SSH_KEY }}
 
       # we can now run individual ssh commands using the Host
 
