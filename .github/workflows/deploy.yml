@@ -17,8 +17,6 @@ jobs:
 
       - name: Build the Docker Images
         run: |
-          pwd
-          ls -la
           docker build -t bazmurphy/cloud-tracker-database:latest database
           docker build -t bazmurphy/cloud-tracker-backend:latest backend
           docker build -t bazmurphy/cloud-tracker-frontend:latest frontend
@@ -64,7 +62,7 @@ jobs:
       #   run: ssh ec2 'cd cloud-tracker && git pull'
 
       - name: Pull the latest Docker Images from DockerHub
-        run: ssh ec2 'docker pull bazmurphy/cloud-tracker-database:latest bazmurphy/cloud-tracker-backend:latest bazmurphy/cloud-tracker-frontend:latest'
+        run: ssh ec2 'docker pull bazmurphy/cloud-tracker-database:latest && docker pull bazmurphy/cloud-tracker-backend:latest && docker pull bazmurphy/cloud-tracker-frontend:latest'
 
       - name: Restart the Containers
         # might need to pass in -e environment variables (also look into secrets)
