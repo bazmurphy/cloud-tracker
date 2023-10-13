@@ -14,9 +14,9 @@ jobs:
     steps:
       - name: Build the Docker Images
         run: |
-          docker build -t bazmurphy/cloud-tracker-database:latest database
-          docker build -t bazmurphy/cloud-tracker-backend:latest backend
-          docker build -t bazmurphy/cloud-tracker-frontend:latest frontend
+          docker build -t bazmurphy/cloud-tracker-database:latest ./database
+          docker build -t bazmurphy/cloud-tracker-backend:latest ./backend
+          docker build -t bazmurphy/cloud-tracker-frontend:latest ./frontend
 
       - name: Login to DockerHub
         env:
