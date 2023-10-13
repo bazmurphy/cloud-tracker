@@ -1,0 +1,94 @@
+version: "3"
+
+services:
+  database:
+    container_name: database
+    # networks:
+    #   - cloud-tracker-network
+    build:
+      context: ./database
+      dockerfile: database.Dockerfile
+      args:
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - database-data:/var/lib/postgresql/data
+
+  backend:
+    container_name: backend
+    # networks:
+    #   - cloud-tracker-network
+    depends_on:
+      - database
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+      args:
+        - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
+        - DB_SSL=${DB_SSL}
+    ports:
+      - "4000:4000"
+
+  frontend:
+    container_name: frontend
+    # networks:
+    #   - cloud-tracker-network
+    depends_on:
+      - backend
+    build:
+      context: ./frontend
+      dockerfile: frontend.Dockerfile
+      # args:
+      # - VITE_API_URL=${VITE_API_URL}
+    ports:
+      - "80:80"
+
+  # ATTEMPT TO SEPARATE frontend and nginx (best practise?):
+
+  # frontend:
+  #   container_name: frontend
+  #   depends_on:
+  #     - database
+  #     - backend
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: frontend.Dockerfile
+  #     args:
+  #       - VITE_API_URL=${VITE_API_URL}
+  # volumes:
+  # - frontend-dist:/frontend/dist
+
+  # nginx:
+  #   container_name: nginx
+  #   # networks:
+  #   #   - cloud-tracker-network
+  #   depends_on:
+  #     - frontend
+  #   build:
+  #     context: ./nginx
+  #     dockerfile: nginx.Dockerfile
+  #     # args:
+  #     #   - FRONTEND_DIST=./frontend/dist
+  #   # volumes:
+  #   # - frontend-dist:/usr/share/nginx/html
+  #   ports:
+  #     - "80:80"
+
+#
+# Define a Named Volume "database-data" to persist the PostgreSQL database
+volumes:
+  database-data:
+#
+
+# Define the Named Volume "frontend-dist"
+# volumes:
+# frontend-dist:
+#
+
+#
+# Define a Network named "cloud-tracker-network"
+# networks:
+#   cloud-tracker-network:
+#
