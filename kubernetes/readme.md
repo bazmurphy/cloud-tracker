@@ -31,16 +31,16 @@
 
    ```
    NAME                                       READY   STATUS    RESTARTS   AGE
-   pod/database-deployment-6dcbb8d7fb-jz2gh   1/1     Running   0          28s
+   pod/database-deployment-6dcbb8d7fb-mvkmr   1/1     Running   0          29s
 
    NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
-   service/database-service   ClusterIP   10.101.209.232   <none>        5432/TCP   24s
+   service/database-service   ClusterIP   10.107.212.195   <none>        5432/TCP   25s
 
    NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
-   deployment.apps/database-deployment   1/1     1            1           28s
+   deployment.apps/database-deployment   1/1     1            1           29s
 
    NAME                                             DESIRED   CURRENT   READY   AGE
-   replicaset.apps/database-deployment-6dcbb8d7fb   1         1         1       28s
+   replicaset.apps/database-deployment-6dcbb8d7fb   1         1         1       29s
    ```
 
 ## Create the Backend
@@ -58,20 +58,20 @@
 
     ```
     NAME                                       READY   STATUS    RESTARTS   AGE
-    pod/backend-deployment-56d9dbc855-pl2jh    1/1     Running   0          20s
-    pod/database-deployment-6dcbb8d7fb-jz2gh   1/1     Running   0          66s
+    pod/backend-deployment-56d9dbc855-lzc2f    1/1     Running   0          23s
+    pod/database-deployment-6dcbb8d7fb-mvkmr   1/1     Running   0          67s
 
     NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
-    service/backend-service    ClusterIP   10.110.251.216   <none>        4000/TCP   17s
-    service/database-service   ClusterIP   10.101.209.232   <none>        5432/TCP   62s
+    service/backend-service    ClusterIP   10.96.252.13     <none>        4000/TCP   18s
+    service/database-service   ClusterIP   10.107.212.195   <none>        5432/TCP   63s
 
     NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
-    deployment.apps/backend-deployment    1/1     1            1           20s
-    deployment.apps/database-deployment   1/1     1            1           66s
+    deployment.apps/backend-deployment    1/1     1            1           23s
+    deployment.apps/database-deployment   1/1     1            1           67s
 
     NAME                                             DESIRED   CURRENT   READY   AGE
-    replicaset.apps/backend-deployment-56d9dbc855    1         1         1       20s
-    replicaset.apps/database-deployment-6dcbb8d7fb   1         1         1       66s
+    replicaset.apps/backend-deployment-56d9dbc855    1         1         1       23s
+    replicaset.apps/database-deployment-6dcbb8d7fb   1         1         1       67s
     ```
 
 ## Create the Frontend
@@ -94,32 +94,25 @@
 
     ```
     NAME                                       READY   STATUS    RESTARTS   AGE
-    pod/backend-deployment-56d9dbc855-pl2jh    1/1     Running   0          83s
-    pod/database-deployment-6dcbb8d7fb-jz2gh   1/1     Running   0          2m9s
-    pod/frontend-deployment-7fc6468f7d-4x2x6   1/1     Running   0          33s
+    pod/backend-deployment-56d9dbc855-lzc2f    1/1     Running   0          54s
+    pod/database-deployment-6dcbb8d7fb-mvkmr   1/1     Running   0          98s
+    pod/frontend-deployment-7fc6468f7d-5tb7l   1/1     Running   0          10s
 
-    NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
-    service/backend-service    ClusterIP   10.110.251.216   <none>        4000/TCP       80s
-    service/database-service   ClusterIP   10.101.209.232   <none>        5432/TCP       2m5s
-    service/frontend-service   NodePort    10.109.0.229     <none>        80:30799/TCP   37s
+    NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+    service/backend-service    ClusterIP   10.96.252.13     <none>        4000/TCP   49s
+    service/database-service   ClusterIP   10.107.212.195   <none>        5432/TCP   94s
+    service/frontend-service   ClusterIP   10.100.137.63    <none>        80/TCP     14s
 
     NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
-    deployment.apps/backend-deployment    1/1     1            1           83s
-    deployment.apps/database-deployment   1/1     1            1           2m9s
-    deployment.apps/frontend-deployment   1/1     1            1           33s
+    deployment.apps/backend-deployment    1/1     1            1           54s
+    deployment.apps/database-deployment   1/1     1            1           98s
+    deployment.apps/frontend-deployment   1/1     1            1           10s
 
     NAME                                             DESIRED   CURRENT   READY   AGE
-    replicaset.apps/backend-deployment-56d9dbc855    1         1         1       83s
-    replicaset.apps/database-deployment-6dcbb8d7fb   1         1         1       2m9s
-    replicaset.apps/frontend-deployment-7fc6468f7d   1         1         1       33s
+    replicaset.apps/backend-deployment-56d9dbc855    1         1         1       54s
+    replicaset.apps/database-deployment-6dcbb8d7fb   1         1         1       98s
+    replicaset.apps/frontend-deployment-7fc6468f7d   1         1         1       10s
     ```
-
-17. No `NodePort` was defined in the `frontend-service` (deliberately) so why is it type `NodePort`
-
-18. `minikube ip`
-    192.168.49.2
-
-19. Try to visit http://192.168.49.2:30799 but nothing
 
 ## Create the Ingress
 
@@ -133,14 +126,16 @@
     ingress   <none>   *                 80      6s
     ```
 
-22. Try to visit http://192.168.49.2 but nothing
+22. `minikube ip`
+    192.168.49.2
 
-23. Research/Suggestions towards a solution:
+23. Try to visit http://192.168.49.2 but nothing
 
-    - `minikube service frontend-service -n cloud-tracker --url`
+24. Research/Suggestions towards a solution:
 
-    - `kubectl port-forward frontend-deployment-7fc6468f7d-4x2x6 80:30799 -n cloud-tracker`
+    - run a service tunnel using: `minikube service frontend-service -n cloud-tracker --url`
+      http://127.0.0.1:49546/ displays the frontned, but the frontend `fetch` is trying http://127.0.0.1:49546/api/coursework which obviously won't work
 
-    - https://minikube.sigs.k8s.io/docs/handbook/accessing/#nodeport-access
+    - https://minikube.sigs.k8s.io/docs/handbook/accessing/#nodeport-access but I am deliberately using an `Ingress` instead of `NodePort`
 
-    - https://minikube.sigs.k8s.io/docs/handbook/addons/ingress-dns/
+    - The `ingress-dns` addon acts as a DNS service that runs inside your Kubernetes cluster https://minikube.sigs.k8s.io/docs/handbook/addons/ingress-dns/
