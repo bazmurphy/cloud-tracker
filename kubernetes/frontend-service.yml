@@ -6,7 +6,7 @@ metadata:
 # spec defines the desired state of the Service
 spec:
   # the NodePort type - the service should be exposed externally using nodePort
-  type: NodePort
+  # type: NodePort
   # the selector MATCHES the LABEL from the Deployment Pod Template
   selector:
     app: frontend
