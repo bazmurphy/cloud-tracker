@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress # a way to configure the external access to services within a Kubernetest Cluster
+metadata:
+  namespace: cloud-tracker
+  name: ingress
+# spec defines the desired state of the Ingress
+spec:
+  rules: # a list of rules for routing traffic based on hostnames and paths
+    - http: # rule for handling http traffic
+        paths: # list of paths that map incoming requests to backend services
+          - path: / # root path
+            pathType: Prefix # Prefix means any request with a path that starts with / (but /api will also be matched)
+            backend: # this defines the backend service to which incoming requests that match the rule should be forwarded
+              service: # a Kubernetes service
+                name: frontend-service # the name of the service
+                port: # the port of the Service to which the traffic should be directed
+                  number: 80 # requests that match this rule will be forwarded ot the frontend service on port 80
+          - path: /api # root path
+            pathType: Prefix # Prefix means any request with a path that starts with / (but /api will also be matched)
+            backend: # this defines the backend service to which incoming requests that match the rule should be forwarded
+              service: # a Kubernetes service
+                name: backend-service # the name of the service
+                port: # the port of the Service to which the traffic should be directed
+                  number: 4000 # requests that match this rule will be forwarded to the backend service on port 4000

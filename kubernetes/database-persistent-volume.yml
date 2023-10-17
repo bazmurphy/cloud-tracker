@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume # A PersistentVolume represents a piece of storage in the Cluster that has been provisioned by an administrator or dynamically provisioned using storage classes.
+metadata:
+  namespace: cloud-tracker
+  name: database-persistent-volume
+# spec defines the desired state of the Persistent Volume
+spec:
+  capacity: # the capacity of the Persistent Volume
+    storage: 1Gi # 1Gb storage available
+  accessModes: # the access modes for the Persistent Volume
+    - ReadWriteOnce # the volume can be mounted as read-write by a Single Node at a time
+  hostPath: # the source of the storage for the Persistent Volume
+    path: "/data/database" # the Persistent Voluem is using a local host path as the source of the storage

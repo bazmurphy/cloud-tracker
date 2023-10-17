@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: cloud-tracker
+  name: frontend-service
+# spec defines the desired state of the Service
+spec:
+  # the NodePort type - the service should be exposed externally using nodePort
+  type: NodePort
+  # the selector MATCHES the LABEL from the Deployment Pod Template
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80 # the service will listen on this port
+      targetPort: 80 # the target port to which incoming traffic should be forwarded, which matches the port on the pods
+      # We shouldn't use a nodePort if we are using an Ingress...?
+      # nodePort: 30000 # the NodePort allows external traffic to access the service on this port. It acts as an entry point into the cluster, and external requests to this port will be routed to the pods on their respective targetPort (in this case, port 80) based on the selector defined in the Service.

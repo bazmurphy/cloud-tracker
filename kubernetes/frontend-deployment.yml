@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: cloud-tracker
+  name: frontend-deployment
+# spec defines the desired state of the Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  # we define the Pod template
+  template:
+    metadata:
+      labels:
+        app: frontend
+    # the Container spec
+    spec:
+      containers:
+        - name: frontend
+          image: bazmurphy/cloud-tracker-frontend
+          ports:
+            - containerPort: 80
+          # env:
+          #   - name: VITE_API_URL
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: backend-configmap
+          #         key: backend-api-endpoint

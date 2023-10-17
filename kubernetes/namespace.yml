@@ -1,0 +1,4 @@
+apiVersion: v1
+kind: Namespace # Namespaces are a way to logically partition or isolate resources within a Kubernetes Cluster
+metadata:
+  name: cloud-tracker

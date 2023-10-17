@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: cloud-tracker
+  name: database-service
+# spec defines the desired state of the Service
+spec:
+  selector:
+    app: database # match pods with the label "app:database"
+  ports:
+    - protocol: TCP
+      port: 5432 # the service will listen on this port
+      targetPort: 5432 # the target port to which incoming traffic should be forwarded which matches the port on the pods where the database service is running

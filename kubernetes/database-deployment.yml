@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: cloud-tracker
+  name: database-deployment
+# spec defines the desired state of the Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  # we define the Pod template
+  template:
+    metadata:
+      labels:
+        app: database
+    # the Container spec
+    spec:
+      containers:
+        - name: database
+          # select the postgres image
+          image: postgres:15
+          ports:
+            - containerPort: 5432
+          # define the environment variables
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef: # from ConfigMap
+                  name: database-configmap
+                  key: postgres-db
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef: # from ConfigMap
+                  name: database-configmap
+                  key: postgres-user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef: # from Secret
+                  name: database-secret
+                  key: postgres-password
+          # mount a volume
+          volumeMounts:
+            - name: database-volume
+              mountPath: /var/lib/postgresql/data
+
+      volumes:
+        - name: database-volume
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim

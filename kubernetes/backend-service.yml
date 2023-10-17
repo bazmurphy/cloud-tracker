@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: cloud-tracker
+  name: backend-service
+# spec defines the desired state of the Service
+spec:
+  # the selector MATCHES the LABEL from the Deployment Pod Template
+  selector:
+    app: backend
+  # the service ports mapping - expose 4000 and forward to target port 4000 on the Pods
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 4000

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+# we give a namespace and name for this Persistent Volume Claim
+metadata:
+  namespace: cloud-tracker
+  name: database-persistent-volume-claim
+# spec defines the desired state of the Persistent Volume Claim
+spec:
+  accessModes: # the access mode of the Persistent Volume Claim
+    - ReadWriteOnce # the volume can be mounted as read-write by a Single Node at a time
+  resources: # the storage resources requested
+    requests:
+      storage: 1Gi # 1 Gb of storage allocated to the Persistent Volume Claim
