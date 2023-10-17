@@ -5,7 +5,7 @@
 ## Create the Namespace
 
 1. `kubectl apply -f namespace.yml`
-   namespace/cloud-tracker created`
+   namespace/cloud-tracker created
 
 ## Create the Database
 
@@ -22,7 +22,7 @@
    persistentvolumeclaim/database-persistent-volume-claim created
 
 6. `kubectl apply -f database-deployment.yml`
-   deployment.apps/database created
+   deployment.apps/database-deployment created
 
 7. `kubectl apply -f database-service.yml`
    service/database-service created
@@ -135,8 +135,12 @@
 
 22. Try to visit http://192.168.49.2 but nothing
 
-23. Suggestions to either:
+23. Research/Suggestions towards a solution:
 
-    - `minikube service frontend-service -n cloud-tracker`
+    - `minikube service frontend-service -n cloud-tracker --url`
 
     - `kubectl port-forward frontend-deployment-7fc6468f7d-4x2x6 80:30799 -n cloud-tracker`
+
+    - https://minikube.sigs.k8s.io/docs/handbook/accessing/#nodeport-access
+
+    - https://minikube.sigs.k8s.io/docs/handbook/addons/ingress-dns/
