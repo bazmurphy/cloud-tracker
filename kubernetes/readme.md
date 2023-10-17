@@ -82,7 +82,7 @@
 14. `kubectl apply -f frontend-deployment.yml`
     deployment.apps/frontend-deployment created
 
-    ```sh
+    ```
     $ kubectl logs -f frontend-deployment-7fc6468f7d-mvbl8 -c frontend -n cloud-tracker
     2023/10/17 16:17:41 [emerg] 1#1: host not found in upstream "backend" in /etc/nginx/nginx.conf:43
     nginx: [emerg] host not found in upstream "backend" in /etc/nginx/nginx.conf:43
@@ -134,3 +134,9 @@
     ```
 
 22. Try to visit http://192.168.49.2 but nothing
+
+23. Suggestions to either:
+
+    - `minikube service frontend-service -n cloud-tracker`
+
+    - `kubectl port-forward frontend-deployment-7fc6468f7d-4x2x6 80:30799 -n cloud-tracker`
