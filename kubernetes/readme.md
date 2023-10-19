@@ -88,7 +88,7 @@
     nginx: [emerg] host not found in upstream "backend" in /etc/nginx/nginx.conf:43
     ```
 
-15. I had to manually edit `nginx.conf` in the Repo/Docker Image to direct `/api` to `http://backend-service:4000` (Kubernetes) instead of `http://backend:4000` (Docker) - How to handle this dynamically?
+15. (!) I had to manually edit `nginx.conf` in the Repo/Docker Image to direct `/api` to `http://backend-service:4000` (Kubernetes) instead of `http://backend:4000` (Docker) - How to handle this dynamically?
 
 16. `kubectl get all --namespace=cloud-tracker`
 
@@ -132,6 +132,8 @@
 23. Try to visit http://192.168.49.2 but nothing
 
 24. Research/Suggestions towards a solution:
+
+    - use an addon to access the ingress `minikube addons enable ingress` (works on linux but not windows)
 
     - run a service tunnel using: `minikube service frontend-service -n cloud-tracker --url`
       http://127.0.0.1:49546/ displays the frontned, but the frontend `fetch` is trying http://127.0.0.1:49546/api/coursework which obviously won't work
