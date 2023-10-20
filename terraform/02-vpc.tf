@@ -141,33 +141,41 @@ resource "aws_internet_gateway" "cloud_tracker_internet_gateway" {
 # -----------------------------------------------
 
 # # Configure the Default Network ACL on the VPC
-# resource "aws_default_network_acl" "cloud_tracker_network_acl_default" {
-#   default_network_acl_id = aws_vpc.cloud_tracker_vpc.default_network_acl_id
+resource "aws_default_network_acl" "cloud_tracker_network_acl_default" {
+  default_network_acl_id = aws_vpc.cloud_tracker_vpc.default_network_acl_id
 
-#   # Incoming to Allow Everything
-#   ingress {
-#     protocol   = -1
-#     rule_no    = 100
-#     action     = "allow"
-#     cidr_block = "0.0.0.0/0"
-#     from_port  = 0
-#     to_port    = 0
-#   }
+  # Incoming to Allow Everything
+  ingress {
+    protocol   = -1
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
 
-#   # Outgoing to Allow Everything
-#   egress {
-#     protocol   = -1
-#     rule_no    = 100
-#     action     = "allow"
-#     cidr_block = "0.0.0.0/0"
-#     from_port  = 0
-#     to_port    = 0
-#   }
+  # Outgoing to Allow Everything
+  egress {
+    protocol   = -1
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
 
-#   tags = {
-#     Name = "cloud-tracker-network-acl-default"
-#   }
-# }
+  # If we don't list these it keeps trying to make changes
+  subnet_ids = [
+    aws_subnet.cloud_tracker_subnet_public_one.id,
+    aws_subnet.cloud_tracker_subnet_public_two.id,
+    aws_subnet.cloud_tracker_subnet_private_one.id,
+    aws_subnet.cloud_tracker_subnet_private_two.id
+  ]
+
+  tags = {
+    Name = "cloud-tracker-network-acl-default"
+  }
+}
 
 # -----------------------------------------------
 
