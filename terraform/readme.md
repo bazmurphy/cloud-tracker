@@ -28,4 +28,4 @@
 
 15. to use `secret.tfvars` use the flag `-var-file="secret.tfvars"
 
-16. `terrarfom xxxxx -var-file="secret.tfvars"`
+16. `terrarfom xxxxx --var-file="secret.tfvars"`
