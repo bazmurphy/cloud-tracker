@@ -72,3 +72,42 @@
 # }
 
 # -----------------------------------------------
+
+# Create an IAM Role for the EC2 Instance
+# resource "aws_iam_role" "cloud_tracker_iam_role_ec2" {
+#   name = "cloud-tracker-iam-role-ec2-to-rds"
+#   assume_role_policy = {}
+# }
+
+# resource "aws_iam_policy" "cloud_tracker_iam_policy_ec2" {
+#   name = "cloud-tracker-iam-policy-ec2"
+#   description = "IAM Policy for EC2 to access RDS"
+#   policy = {}
+# }
+
+# resource "aws_iam_role_policy_attachment" "cloud_tracker_iam_role_policy_attachment_ec2" {
+#   policy_arn = aws_iam_policy.cloud_tracker_iam_policy_ec2.arn
+#   role = aws_iam_role.cloud_tracker_iam_role_ec2.name
+# }
+
+# -----------------------------------------------
+
+# Create an IAM Role for the RDS Instance
+# resource "aws_iam_role" "cloud_tracker_iam_role_rds" {
+#   name = "cloud-tracker-iam-role-rds-to-ec2"
+#   assume_role_policy = {}
+# }
+
+# resource "aws_iam_policy" "cloud_tracker_iam_policy_rds" {
+#   name = "cloud-tracker-iam-policy-rds"
+#   description = "IAM Policy for RDS to access EC2"
+#   policy = {}
+# }
+
+# resource "aws_iam_role_policy_attachment" "cloud_tracker_iam_role_policy_attachment_rds" {
+#   # policy_arn = aws_iam_policy.cloud_tracker_iam_policy_rds.arn
+#   policy_arn = "arn:aws:iam::aws:policy/AmazonRDS_DataAPI"
+#   role = aws_iam_role.cloud_tracker_iam_role_rds.name
+# }
+
+# -----------------------------------------------

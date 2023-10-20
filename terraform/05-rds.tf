@@ -12,7 +12,7 @@ resource "aws_security_group" "cloud_tracker_security_group_rds_database" {
     protocol    = "tcp"
     # Allow anything in the VPC to access the RDS Instance
     # cidr_blocks = ["10.1.0.0/16"]
-    # Only allow the EC2 Instance to access the RDS Instance
+    # Only allow the EC2 Instance to access the RDS Instance - BUT IS THIS SECURITY GROUP CORRECT?
     security_groups = [aws_security_group.cloud_tracker_security_group_ec2_instance.id]
   }
 
@@ -181,6 +181,9 @@ resource "aws_db_instance" "cloud_tracker_rds_database" {
 
   # Deletion Protection
   deletion_protection = false
+
+  # Allow IAM Database Authentication (from the EC2 Instance IAM (Instance) Profile)
+  # iam_database_authentication_enabled = true
 }
 
 # -----------------------------------------------

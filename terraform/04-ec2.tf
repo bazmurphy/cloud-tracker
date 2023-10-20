@@ -116,7 +116,7 @@ resource "aws_instance" "cloud_tracker_ec2_instance" {
   }
 
   # Define the IAM Instance Profile
-  # iam_instance_profile = aws_iam_instance_profile.ec2_access_instance_profile.id
+  # iam_instance_profile = aws_iam_role.cloud_tracker_iam_role_ec2.id
 }
 
 # -----------------------------------------------
