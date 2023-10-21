@@ -15,3 +15,15 @@ variable "postgres_database_name" {
   type        = string
   sensitive   = true
 }
+
+# variable "postgres_connection_string" {
+#   description = "value"
+#   type        = string
+#   sensitive   = true
+# }
+
+# variable "postgres_ssl" {
+#   description = "value"
+#   type        = string
+#   sensitive   = true
+# }

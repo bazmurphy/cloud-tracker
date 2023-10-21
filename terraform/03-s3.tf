@@ -70,7 +70,7 @@ data "aws_iam_policy_document" "cloud_tracker_policy_document_s3" {
       type        = "*"
       identifiers = ["*"]
     }
-    actions = ["s3:*"]
+    actions = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.cloud_tracker_bucket.arn}/*"]
   }
 }

@@ -18,15 +18,15 @@ resource "aws_security_group" "cloud_tracker_security_group_ec2_instance" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   # Incoming to Allow HTTP
   ingress {
-    from_port   = 80 
+    from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   # Outgoing to Allow Everything
@@ -46,11 +46,11 @@ resource "aws_security_group" "cloud_tracker_security_group_ec2_instance" {
 
 # Dynamically Get the Amazon Linux 2023 AMI
 data "aws_ami" "cloud_tracker_ec2_instance_ami" {
-  owners = ["amazon"] # Replace with the desired owner, e.g., "amazon" for AWS-provided AMIs
+  owners      = ["amazon"] # Replace with the desired owner, e.g., "amazon" for AWS-provided AMIs
   most_recent = true
 
   filter {
-    name = "name"
+    name   = "name"
     values = ["al2023-ami-2023*"]
   }
 
@@ -87,7 +87,7 @@ resource "aws_instance" "cloud_tracker_ec2_instance" {
   # key_name = "some-key-pair"
 
   # [4] Network Settings
-  
+
   # VPC
   # Do we need to define that here?
 
@@ -105,11 +105,21 @@ resource "aws_instance" "cloud_tracker_ec2_instance" {
     volume_size = 8
     volume_type = "gp3"
   }
-  
+
   # [6] Advanced Details
 
   # User Data
-  user_data = file("ec2script.sh")
+  # user_data = file("ec2script.sh")
+
+  user_data = templatefile(
+    "ec2script.sh",
+    {
+      POSTGRES_USER        = local.postgres_user,
+      POSTGRES_PASSWORD    = random_password.postgres_password.result,
+      DB_CONNECTION_STRING = "postgresql://${local.postgres_user}:${random_password.postgres_password.result}@database/cloudtracker",
+      DB_SSL               = false
+    }
+  )
 
   tags = {
     Name = "cloud-tracker-ec2-instance"
@@ -117,6 +127,16 @@ resource "aws_instance" "cloud_tracker_ec2_instance" {
 
   # Define the IAM Instance Profile
   # iam_instance_profile = aws_iam_role.cloud_tracker_iam_role_ec2.id
+}
+
+# -----------------------------------------------
+resource "random_password" "postgres_password" {
+  length  = 16
+  special = false
+}
+
+locals {
+  postgres_user = "postgres"
 }
 
 # -----------------------------------------------
