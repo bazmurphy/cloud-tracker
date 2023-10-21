@@ -5,7 +5,7 @@ resource "aws_vpc" "cloud_tracker_vpc" {
   cidr_block = "10.1.0.0/16"
 
   # DNS resolution through the Amazon DNS server is supported for the VPC
-  enable_dns_support   = true
+  enable_dns_support = true
   # Instances launched in the VPC receive public DNS hostnames that correspond to their public IP addresses
   enable_dns_hostnames = true
 
@@ -38,8 +38,8 @@ resource "aws_default_route_table" "cloud_tracker_route_table_default" {
 
 # Create the Public Subnet One
 resource "aws_subnet" "cloud_tracker_subnet_public_one" {
-  vpc_id     = aws_vpc.cloud_tracker_vpc.id
-  cidr_block = "10.1.1.0/24"
+  vpc_id            = aws_vpc.cloud_tracker_vpc.id
+  cidr_block        = "10.1.1.0/24"
   availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
@@ -49,8 +49,8 @@ resource "aws_subnet" "cloud_tracker_subnet_public_one" {
 
 # Create the Public Subnet Two
 resource "aws_subnet" "cloud_tracker_subnet_public_two" {
-  vpc_id     = aws_vpc.cloud_tracker_vpc.id
-  cidr_block = "10.1.3.0/24"
+  vpc_id            = aws_vpc.cloud_tracker_vpc.id
+  cidr_block        = "10.1.3.0/24"
   availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = {
@@ -76,8 +76,8 @@ resource "aws_route_table_association" "cloud_tracker_route_table_association_pu
 
 # Create the Private Subnet One
 resource "aws_subnet" "cloud_tracker_subnet_private_one" {
-  vpc_id     = aws_vpc.cloud_tracker_vpc.id
-  cidr_block = "10.1.2.0/24"
+  vpc_id            = aws_vpc.cloud_tracker_vpc.id
+  cidr_block        = "10.1.2.0/24"
   availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
@@ -87,8 +87,8 @@ resource "aws_subnet" "cloud_tracker_subnet_private_one" {
 
 # Create the Private Subnet Two
 resource "aws_subnet" "cloud_tracker_subnet_private_two" {
-  vpc_id     = aws_vpc.cloud_tracker_vpc.id
-  cidr_block = "10.1.4.0/24"
+  vpc_id            = aws_vpc.cloud_tracker_vpc.id
+  cidr_block        = "10.1.4.0/24"
   availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = {
@@ -183,7 +183,7 @@ resource "aws_default_network_acl" "cloud_tracker_network_acl_default" {
 resource "aws_default_security_group" "cloud_tracker_security_group_vpc_default" {
   # name = "cloud-tracker-security-group-vpc-default"
   # Can't configure a value for "name": its value will be decided automatically based on the result of applying this configuration.
-  
+
   vpc_id = aws_vpc.cloud_tracker_vpc.id
 
   # Incoming to Allow Everything

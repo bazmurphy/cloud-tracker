@@ -57,20 +57,20 @@ resource "aws_s3_bucket_website_configuration" "cloud_tracker_bucket_website_con
     suffix = "index.html"
   }
   # error_document {
-    # key = "error.html"
+  # key = "error.html"
   # }
 }
 
 # Define The S3 Policy Document
 data "aws_iam_policy_document" "cloud_tracker_policy_document_s3" {
   statement {
-    sid       = "PublicRead"
-    effect    = "Allow"
+    sid    = "PublicRead"
+    effect = "Allow"
     principals {
       type        = "*"
       identifiers = ["*"]
     }
-    actions = ["s3:GetObject"]
+    actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.cloud_tracker_bucket.arn}/*"]
   }
 }
@@ -93,15 +93,15 @@ module "frontend_dist_folder" {
 # Upload the contents of frontend/dist/ to the S3 Bucket
 resource "aws_s3_object" "cloud_tracker_bucket_s3_object" {
   bucket = aws_s3_bucket.cloud_tracker_bucket.id
-  
+
   for_each = module.frontend_dist_folder.files
 
-  key = each.key
+  key          = each.key
   content_type = each.value.content_type
 
   # The template_files module guarantees that only one of these two attributes will be set for each file,
   # depending on whether it is an in-memory template rendering result or a static file on disk.
-  source  = each.value.source_path
+  source = each.value.source_path
 
   # (!) S3 assigns a Content Type of binary/octet-stream to uploaded files by default
   content = each.value.content

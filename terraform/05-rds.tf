@@ -7,9 +7,9 @@ resource "aws_security_group" "cloud_tracker_security_group_rds_database" {
 
   # Incoming to Allow PostgreSQL
   ingress {
-    from_port   = 5432 
-    to_port     = 5432
-    protocol    = "tcp"
+    from_port = 5432
+    to_port   = 5432
+    protocol  = "tcp"
     # Allow anything in the VPC to access the RDS Instance
     # cidr_blocks = ["10.1.0.0/16"]
     # Only allow the EC2 Instance to access the RDS Instance - BUT IS THIS SECURITY GROUP CORRECT?
@@ -44,10 +44,17 @@ resource "aws_db_subnet_group" "cloud_tracker_db_subnet_group" {
 
 # -----------------------------------------------
 
-# Reference an SQL file to seed the RDS Instance
-# data "template_file" "initialise" {
-#   template = file("initialise.sql")
-# }
+# Create a Local for Postgres User
+locals {
+  postgres_user          = "postgres"
+  postgres_database_name = "cloudtracker"
+}
+
+# Generate a Random Password for Postgres Password
+resource "random_password" "postgres_password" {
+  length  = 16
+  special = false
+}
 
 # -----------------------------------------------
 
@@ -60,7 +67,7 @@ resource "aws_db_instance" "cloud_tracker_rds_database" {
 
   # [2] Engine Options
   # Engine Version
-  engine = "postgres"
+  engine         = "postgres"
   engine_version = "15.3"
 
   # [3] Templates
@@ -74,10 +81,10 @@ resource "aws_db_instance" "cloud_tracker_rds_database" {
   identifier = "cloud-tracker-rds-database"
 
   # Master Username
-  username = var.postgres_user
+  username = local.postgres_user
 
   # Master Password
-  password = var.postgres_password
+  password = random_password.postgres_password.result
 
   # [6] Instance Configuration
   # DB Instance Class
@@ -114,7 +121,7 @@ resource "aws_db_instance" "cloud_tracker_rds_database" {
 
   # Availability Zone
   availability_zone = data.aws_availability_zones.available.names[0]
-  
+
   # RDS Proxy
   # ???
 
@@ -131,14 +138,14 @@ resource "aws_db_instance" "cloud_tracker_rds_database" {
   # [10] Monitoring
   # Turn on Performance Insights
   performance_insights_enabled = false
-  
+
   # Additional Configuration
   # Enhanced Monitoring
   # monitoring_interval = 0
 
   # [11] Additional Configuration
   # Initial Database Name
-  db_name = var.postgres_database_name
+  db_name = local.postgres_database_name
 
   # DB Parameter Group
   parameter_group_name = "default.postgres15"
@@ -185,6 +192,13 @@ resource "aws_db_instance" "cloud_tracker_rds_database" {
   # Allow IAM Database Authentication (from the EC2 Instance IAM (Instance) Profile)
   # iam_database_authentication_enabled = true
 }
+
+# -----------------------------------------------
+
+# Reference an SQL file to seed the RDS Instance
+# data "template_file" "initialise" {
+#   template = file("initialise.sql")
+# }
 
 # -----------------------------------------------
 

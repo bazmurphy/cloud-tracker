@@ -116,7 +116,7 @@ resource "aws_instance" "cloud_tracker_ec2_instance" {
     {
       POSTGRES_USER        = local.postgres_user,
       POSTGRES_PASSWORD    = random_password.postgres_password.result,
-      DB_CONNECTION_STRING = "postgresql://${local.postgres_user}:${random_password.postgres_password.result}@database/cloudtracker",
+      DB_CONNECTION_STRING = "postgresql://${local.postgres_user}:${random_password.postgres_password.result}@database/${local.postgres_database_name}",
       DB_SSL               = false
     }
   )
@@ -127,16 +127,6 @@ resource "aws_instance" "cloud_tracker_ec2_instance" {
 
   # Define the IAM Instance Profile
   # iam_instance_profile = aws_iam_role.cloud_tracker_iam_role_ec2.id
-}
-
-# -----------------------------------------------
-resource "random_password" "postgres_password" {
-  length  = 16
-  special = false
-}
-
-locals {
-  postgres_user = "postgres"
 }
 
 # -----------------------------------------------
