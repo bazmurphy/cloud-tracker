@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 # this command makes a log of the ec2 user data and stores it at /var/log/user-data.log for debugging
 # exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
-echo "User Data Script Test..."
+echo "EC2 User Data Script Started"
 # update packages
 sudo yum update
 # install docker
@@ -42,3 +42,4 @@ DB_SSL=${DB_SSL}
 EOF
 # run docker compose
 docker-compose up -d
+echo "EC2 User Data Script Finished"

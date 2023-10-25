@@ -22,10 +22,13 @@
 
 12. `terraform init`
 
-13. `terraform plan`
+13. `terraform validate`
 
-14. `terraform apply`
+14. `terraform plan`
 
-15. to use `secret.tfvars` use the flag `-var-file="secret.tfvars"
+15. `terraform apply`
 
-16. `terrarfom xxxxx --var-file="secret.tfvars"`
+16. to use `secret.tfvars` use the flag `-var-file="secret.tfvars"
+
+17. `terraform plan --var-file="secret.tfvars"`
+    `terraform apply --var-file="secret.tfvars"`

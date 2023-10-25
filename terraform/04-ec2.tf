@@ -112,7 +112,7 @@ resource "aws_instance" "cloud_tracker_ec2_instance" {
   # user_data = file("ec2script.sh")
 
   user_data = templatefile(
-    "ec2script.sh",
+    "ec2-user-data.sh",
     {
       POSTGRES_USER        = local.postgres_user,
       POSTGRES_PASSWORD    = random_password.postgres_password.result,
