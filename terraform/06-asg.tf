@@ -20,15 +20,24 @@ resource "aws_launch_template" "cloud_tracker_launch_template" {
   # [5] Network Settings
   # [5.1]
   # Subnet
-  # Should we specify this here or not??? (Dynamic???)
   # [5.2]
   # Firewall (Security Groups)
   vpc_security_group_ids = [aws_security_group.cloud_tracker_security_group_ec2_instance.id]
 
-  # ??? Associate a public ip address with the network interface
-  # network_interfaces {
-  #   associate_public_ip_address = true
-  # }
+  # A list of security group names to associate with,
+  # If you are creating Instances in a VPC, use vpc_security_group_ids instead
+  # security_group_names = [aws_security_group.cloud_tracker_security_group_ec2_instance.id]
+
+
+  # Attaches one or more Network Interfaces to the instance.
+  network_interfaces {
+    # Associate a public ip address with the network interface
+    associate_public_ip_address = true
+    # A list of security group IDs to associate
+    # security_groups = [aws_security_group.cloud_tracker_security_group_ec2_instance.id]
+    # The VPC Subnet ID to associate
+    # subnet_id = aws_subnet.cloud_tracker_subnet_public_one.id
+  }
 
   # [6] Storage (Volumes)
   block_device_mappings {
@@ -45,12 +54,12 @@ resource "aws_launch_template" "cloud_tracker_launch_template" {
   }
 
   # [7] Resource Tags
-  # tag_specifications {
-  #   resource_type = "instance"
-  #   tags = {
-  #     "Name" = "Cloud Tracker Instance"
-  #   }
-  # }
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      "Name" = "cloud-tracker-launch-template-instance"
+    }
+  }
 
   # [8] Advanced Details
   # [8.1] IAM Instance Profile
@@ -121,7 +130,7 @@ resource "aws_autoscaling_group" "cloud_tracker_autoscaling_group" {
   # default_instance_warmup = false
 
   # [9] Group Size
-  desired_capacity = 2
+  desired_capacity = 1
   min_size         = 1
   max_size         = 2
 
@@ -144,17 +153,20 @@ resource "aws_autoscaling_group" "cloud_tracker_autoscaling_group" {
   # [13] Add Tags
   tag {
     key                 = "Name"
-    value               = "cloud-tracker-autoscaling-group"
+    value               = "cloud-tracker-autoscaling-group-instance"
     propagate_at_launch = true
   }
 }
 
 # -----------------------------------------------
 
-# Attach the Auto Scaling Group to the Load Balancer Target Group
-resource "aws_autoscaling_attachment" "cloud_tracker_autoscaling_attachment" {
-  autoscaling_group_name = aws_autoscaling_group.cloud_tracker_autoscaling_group.id
-  lb_target_group_arn    = aws_lb_target_group.cloud_tracker_load_balancer_target_group.arn
-}
+# Both approaches (target_group_arns or aws_autoscaling_attachment) will attach the ASG to the ALB target group. 
+# The attachment resource just provides a more explicit way to define the connection as a separate resource.
+
+# # Attach the Auto Scaling Group to the Load Balancer Target Group
+# resource "aws_autoscaling_attachment" "cloud_tracker_autoscaling_attachment" {
+#   autoscaling_group_name = aws_autoscaling_group.cloud_tracker_autoscaling_group.id
+#   lb_target_group_arn    = aws_lb_target_group.cloud_tracker_load_balancer_target_group.arn
+# }
 
 # -----------------------------------------------

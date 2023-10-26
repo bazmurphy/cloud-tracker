@@ -54,8 +54,8 @@ resource "aws_lb_target_group" "cloud_tracker_load_balancer_target_group" {
     path = "/"
     # Advanced Health Check Settings
     # [2.3] Health Check Port
-    # port = "traffic-port"
-    port = 80
+    port = "traffic-port"
+    # port = 80
     # [2.4] Healthy Threshold
     healthy_threshold = 3
     # [2.5] Unhealthy Threshold
@@ -72,7 +72,7 @@ resource "aws_lb_target_group" "cloud_tracker_load_balancer_target_group" {
 
   # [4] Tags
   tags = {
-    Name = "cloud-tracker-load-balancer-target-group-instance"
+    Name = "cloud-tracker-load-balancer-target-group"
   }
 
   # [5] Register Targets
