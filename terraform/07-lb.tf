@@ -126,4 +126,3 @@ resource "aws_lb_listener" "cloud_tracker_load_balancer_listener" {
 }
 
 # -----------------------------------------------
-

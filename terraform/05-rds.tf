@@ -44,7 +44,7 @@ resource "aws_db_subnet_group" "cloud_tracker_db_subnet_group" {
 
 # -----------------------------------------------
 
-# Create a Local for Postgres User
+# Create a Local for Postgres User and Postgres Database Name
 locals {
   postgres_user          = "postgres"
   postgres_database_name = "cloudtracker"
