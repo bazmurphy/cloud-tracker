@@ -130,7 +130,7 @@ resource "aws_autoscaling_group" "cloud_tracker_autoscaling_group" {
   # default_instance_warmup = false
 
   # [9] Group Size
-  desired_capacity = 2
+  desired_capacity = 1
   min_size         = 1
   max_size         = 2
 
