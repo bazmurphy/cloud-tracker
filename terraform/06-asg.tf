@@ -22,7 +22,7 @@ resource "aws_launch_template" "cloud_tracker_launch_template" {
   # Subnet
   # [5.2]
   # Firewall (Security Groups)
-  vpc_security_group_ids = [aws_security_group.cloud_tracker_security_group_ec2_instance.id]
+  # vpc_security_group_ids = [aws_security_group.cloud_tracker_security_group_ec2_instance.id]
 
   # A list of security group names to associate with,
   # If you are creating Instances in a VPC, use vpc_security_group_ids instead
@@ -34,7 +34,7 @@ resource "aws_launch_template" "cloud_tracker_launch_template" {
     # Associate a public ip address with the network interface
     associate_public_ip_address = true
     # A list of security group IDs to associate
-    # security_groups = [aws_security_group.cloud_tracker_security_group_ec2_instance.id]
+    security_groups = [aws_security_group.cloud_tracker_security_group_ec2_instance.id]
     # The VPC Subnet ID to associate
     # subnet_id = aws_subnet.cloud_tracker_subnet_public_one.id
   }
@@ -97,7 +97,7 @@ resource "aws_autoscaling_group" "cloud_tracker_autoscaling_group" {
   # [2] Launch Template
   launch_template {
     id      = aws_launch_template.cloud_tracker_launch_template.id
-    version = "$Default"
+    version = "$Latest"
   }
 
   # [3] Instance Type Requirements
@@ -130,7 +130,7 @@ resource "aws_autoscaling_group" "cloud_tracker_autoscaling_group" {
   # default_instance_warmup = false
 
   # [9] Group Size
-  desired_capacity = 1
+  desired_capacity = 2
   min_size         = 1
   max_size         = 2
 

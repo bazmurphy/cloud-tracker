@@ -41,6 +41,8 @@ resource "aws_subnet" "cloud_tracker_subnet_public_one" {
   vpc_id            = aws_vpc.cloud_tracker_vpc.id
   cidr_block        = "10.1.1.0/24"
   availability_zone = data.aws_availability_zones.available.names[0]
+  # Enable auto-assign public IPv4 address
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "cloud-tracker-subnet-public-one"
@@ -52,6 +54,8 @@ resource "aws_subnet" "cloud_tracker_subnet_public_two" {
   vpc_id            = aws_vpc.cloud_tracker_vpc.id
   cidr_block        = "10.1.3.0/24"
   availability_zone = data.aws_availability_zones.available.names[1]
+  # Enable auto-assign public IPv4 address
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "cloud-tracker-subnet-public-two"
