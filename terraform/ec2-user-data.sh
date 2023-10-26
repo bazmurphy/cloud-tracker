@@ -3,7 +3,7 @@
 # exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 echo "EC2 User Data Script Started"
 # update packages
-sudo yum update
+sudo yum update -y
 # install docker
 sudo yum install -y docker
 # start the docker service

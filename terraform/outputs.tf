@@ -8,26 +8,26 @@ output "cloud_tracker_s3_bucket_url" {
 
 # -----------------------------------------------
 
-# Get the Public IP of the created EC2 Instance
-output "cloud_tracker_ec2_instance_public_ip" {
-  description = "EC2 Instance Public IP"
-  value       = aws_instance.cloud_tracker_ec2_instance.public_ip
-  sensitive   = true
-}
+# # Get the Public IP of the created EC2 Instance
+# output "cloud_tracker_ec2_instance_public_ip" {
+#   description = "EC2 Instance Public IP"
+#   value       = aws_instance.cloud_tracker_ec2_instance.public_ip
+#   sensitive   = true
+# }
 
-# Get the Public DNS of the created EC2 Instance
-output "cloud_tracker_ec2_instance_public_dns" {
-  description = "EC2 Instance Public DNS"
-  value       = aws_instance.cloud_tracker_ec2_instance.public_dns
-  # sensitive = true
-}
+# # Get the Public DNS of the created EC2 Instance
+# output "cloud_tracker_ec2_instance_public_dns" {
+#   description = "EC2 Instance Public DNS"
+#   value       = aws_instance.cloud_tracker_ec2_instance.public_dns
+#   # sensitive = true
+# }
 
-# URL
-output "cloud_tracker_ec2_url" {
-  description = "EC2 URL"
-  value       = "http://${aws_instance.cloud_tracker_ec2_instance.public_dns}"
-  # sensitive = true
-}
+# # URL
+# output "cloud_tracker_ec2_url" {
+#   description = "EC2 URL"
+#   value       = "http://${aws_instance.cloud_tracker_ec2_instance.public_dns}"
+#   # sensitive = true
+# }
 
 # -----------------------------------------------
 
@@ -53,6 +53,13 @@ output "cloud_tracker_rds_database_password" {
   description = "RDS Instance Root Password"
   value       = aws_db_instance.cloud_tracker_rds_database.password
   sensitive   = true
+}
+
+# -----------------------------------------------
+
+output "cloud_tracker_load_balancer_dns_name" {
+  description = "Application Load Balancer DNS Name"
+  value       = "http://${aws_lb.cloud_tracker_load_balancer.dns_name}"
 }
 
 # -----------------------------------------------
