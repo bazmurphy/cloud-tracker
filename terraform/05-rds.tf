@@ -159,7 +159,7 @@ resource "aws_db_instance" "cloud_tracker_rds_database" {
 
   # Backup Window
   # Choose A Window / No Preference
-  # backup_window = ???
+  # backup_window = "00:00-00:00"
 
   # Copy tags to snapshots
   # copy_tags_to_snapshot = false

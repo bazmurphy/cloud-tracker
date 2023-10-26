@@ -6,5 +6,5 @@
   sudo yum install -y httpd
   sudo systemctl start httpd
   sudo systemctl enable httpd
-  sudo sh -c 'echo "<h1>Cloud Tracker</h1><h2>Load Balancer Test</h2><h3>Instance: $(hostname -f)</h3>" > /var/www/html/index.html'
+  sudo sh -c 'echo "<h1>Cloud Tracker</h1><h2>Load Balancer Test</h2><h3>Instance Public IP: $(curl -s http://ifconfig.me/ip)</h3><h3>Instance Private IP: $(hostname -f)</h3>" > /var/www/html/index.html'
   echo "EC2 User Data Script Finished..."
