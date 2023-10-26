@@ -97,8 +97,8 @@ resource "aws_autoscaling_group" "cloud_tracker_autoscaling_group" {
   # [4] Network
   # [4.1] VPC
   # [4.2] Availability Zones And Subnets
-  vpc_zone_identifier = [aws_subnet.cloud_tracker_subnet_public_one.id, aws_subnet.cloud_tracker_subnet_public_two.id]
   # availability_zones  = [""]
+  vpc_zone_identifier = [aws_subnet.cloud_tracker_subnet_public_one.id, aws_subnet.cloud_tracker_subnet_public_two.id]
 
   # [5] Load Balancing
   # [5.1] Attach to an Existing Load Balancer

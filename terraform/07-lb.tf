@@ -72,7 +72,7 @@ resource "aws_lb_target_group" "cloud_tracker_load_balancer_target_group" {
 
   # [4] Tags
   tags = {
-    Name = "cloud-tracker-load-balancer-target-group"
+    Name = "cloud-tracker-load-balancer-target-group-instance"
   }
 
   # [5] Register Targets

@@ -72,61 +72,61 @@ data "aws_ami" "cloud_tracker_ec2_instance_ami" {
 
 # -----------------------------------------------
 
-## Create the EC2 Instance
-resource "aws_instance" "cloud_tracker_ec2_instance" {
-  # Trying to replicate the manual launch user interface:
+# ## Create the EC2 Instance
+# resource "aws_instance" "cloud_tracker_ec2_instance" {
+#   # Trying to replicate the manual launch user interface:
 
-  # [1] Use the Amazon Linux 2023 AMI
-  # ami = "ami-04fb7beeed4da358b"
-  ami = data.aws_ami.cloud_tracker_ec2_instance_ami.id
+#   # [1] Use the Amazon Linux 2023 AMI
+#   # ami = "ami-04fb7beeed4da358b"
+#   ami = data.aws_ami.cloud_tracker_ec2_instance_ami.id
 
-  # [2] Use the t2.micro Free Tier Instance Type
-  instance_type = "t2.micro"
+#   # [2] Use the t2.micro Free Tier Instance Type
+#   instance_type = "t2.micro"
 
-  # [3] Key pair for SSH access
-  # key_name = "some-key-pair"
+#   # [3] Key pair for SSH access
+#   # key_name = "some-key-pair"
 
-  # [4] Network Settings
+#   # [4] Network Settings
 
-  # VPC
-  # Do we need to define that here?
+#   # VPC
+#   # Do we need to define that here?
 
-  # Subnet
-  subnet_id = aws_subnet.cloud_tracker_subnet_public_one.id
+#   # Subnet
+#   subnet_id = aws_subnet.cloud_tracker_subnet_public_one.id
 
-  # Auto-assing Public IP
-  associate_public_ip_address = true
+#   # Auto-assing Public IP
+#   associate_public_ip_address = true
 
-  # Firewall (Security Groups)
-  vpc_security_group_ids = [aws_security_group.cloud_tracker_security_group_ec2_instance.id]
+#   # Firewall (Security Groups)
+#   vpc_security_group_ids = [aws_security_group.cloud_tracker_security_group_ec2_instance.id]
 
-  # [5] Configure Storage
-  root_block_device {
-    volume_size = 8
-    volume_type = "gp3"
-  }
+#   # [5] Configure Storage
+#   root_block_device {
+#     volume_size = 8
+#     volume_type = "gp3"
+#   }
 
-  # [6] Advanced Details
+#   # [6] Advanced Details
 
-  # User Data
-  # user_data = file("ec2script.sh")
+#   # User Data
+#   # user_data = file("ec2script.sh")
 
-  user_data = templatefile(
-    "ec2-user-data.sh",
-    {
-      POSTGRES_USER        = local.postgres_user,
-      POSTGRES_PASSWORD    = random_password.postgres_password.result,
-      DB_CONNECTION_STRING = "postgresql://${local.postgres_user}:${random_password.postgres_password.result}@database/${local.postgres_database_name}",
-      DB_SSL               = false
-    }
-  )
+#   user_data = templatefile(
+#     "ec2-user-data.sh",
+#     {
+#       POSTGRES_USER        = local.postgres_user,
+#       POSTGRES_PASSWORD    = random_password.postgres_password.result,
+#       DB_CONNECTION_STRING = "postgresql://${local.postgres_user}:${random_password.postgres_password.result}@database/${local.postgres_database_name}",
+#       DB_SSL               = false
+#     }
+#   )
 
-  tags = {
-    Name = "cloud-tracker-ec2-instance"
-  }
+#   tags = {
+#     Name = "cloud-tracker-ec2-instance"
+#   }
 
-  # Define the IAM Instance Profile
-  # iam_instance_profile = aws_iam_role.cloud_tracker_iam_role_ec2.id
-}
+#   # Define the IAM Instance Profile
+#   # iam_instance_profile = aws_iam_role.cloud_tracker_iam_role_ec2.id
+# }
 
 # -----------------------------------------------
