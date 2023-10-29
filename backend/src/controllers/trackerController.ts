@@ -192,3 +192,8 @@ export const putSpecificTraineeSpecificCoursework = async (
       .json({ success: false, error: true, message: error.message });
   }
 };
+
+export const getClientIP = async (req: Request, res: Response) => {
+  const clientIP = req.socket.remoteAddress;
+  res.json({ clientIP: clientIP });
+};
