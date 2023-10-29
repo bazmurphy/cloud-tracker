@@ -126,3 +126,10 @@ resource "aws_lb_listener" "cloud_tracker_load_balancer_listener" {
 }
 
 # -----------------------------------------------
+
+output "cloud_tracker_load_balancer_dns_name" {
+  description = "Application Load Balancer DNS Name"
+  value       = "http://${aws_lb.cloud_tracker_load_balancer.dns_name}"
+}
+
+# -----------------------------------------------

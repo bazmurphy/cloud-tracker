@@ -222,3 +222,29 @@ resource "aws_db_instance" "cloud_tracker_rds_database" {
 # }
 
 # -----------------------------------------------
+
+output "cloud_tracker_rds_database_address" {
+  description = "RDS Instance Address"
+  value       = aws_db_instance.cloud_tracker_rds_database.address
+  sensitive   = true
+}
+
+output "cloud_tracker_rds_database_port" {
+  description = "RDS Instance Port"
+  value       = aws_db_instance.cloud_tracker_rds_database.port
+  sensitive   = true
+}
+
+output "cloud_tracker_rds_database_username" {
+  description = "RDS Instance Root Username"
+  value       = aws_db_instance.cloud_tracker_rds_database.username
+  sensitive   = true
+}
+
+output "cloud_tracker_rds_database_password" {
+  description = "RDS Instance Root Password"
+  value       = aws_db_instance.cloud_tracker_rds_database.password
+  sensitive   = true
+}
+
+# -----------------------------------------------

@@ -130,3 +130,26 @@ data "aws_ami" "cloud_tracker_ec2_instance_ami" {
 # }
 
 # -----------------------------------------------
+
+# # Get the Public IP of the created EC2 Instance
+# output "cloud_tracker_ec2_instance_public_ip" {
+#   description = "EC2 Instance Public IP"
+#   value       = aws_instance.cloud_tracker_ec2_instance.public_ip
+#   sensitive   = true
+# }
+
+# # Get the Public DNS of the created EC2 Instance
+# output "cloud_tracker_ec2_instance_public_dns" {
+#   description = "EC2 Instance Public DNS"
+#   value       = aws_instance.cloud_tracker_ec2_instance.public_dns
+#   # sensitive = true
+# }
+
+# # URL
+# output "cloud_tracker_ec2_url" {
+#   description = "EC2 URL"
+#   value       = "http://${aws_instance.cloud_tracker_ec2_instance.public_dns}"
+#   # sensitive = true
+# }
+
+# -----------------------------------------------

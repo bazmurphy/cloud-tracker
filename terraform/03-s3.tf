@@ -111,3 +111,11 @@ resource "aws_s3_object" "cloud_tracker_bucket_s3_object" {
 }
 
 # -----------------------------------------------
+
+output "cloud_tracker_s3_bucket_url" {
+  description = "S3 URL"
+  value       = "https://${aws_s3_bucket.cloud_tracker_bucket.bucket_regional_domain_name}"
+  # sensitive = true
+}
+
+# -----------------------------------------------

@@ -82,18 +82,18 @@ resource "aws_launch_template" "cloud_tracker_launch_template" {
   # user_data = filebase64("${path.module}/example.sh")
   # user_data = filebase64("ec2-user-data-lb-test.sh")
   # user_data = filebase64("ec2-user-data.sh")
-  user_data = templatefile(
+  user_data = base64encode(templatefile(
     "ec2-user-data.sh",
     {
       POSTGRES_USER                    = local.postgres_user,
       POSTGRES_PASSWORD                = random_password.postgres_password.result,
       DB_CONNECTION_STRING             = "postgresql://${local.postgres_user}:${random_password.postgres_password.result}@database/${local.postgres_database_name}",
-      DB_SSL                           = false
-      AWS_CLOUDWATCH_REGION            = "eu-west-2"
-      AWS_CLOUDWATCH_ACCESS_KEY_ID     = var.secret_aws_cloudwatch_user_access_key_id
-      AWS_CLOUDWATCH_SECRET_ACCESS_KEY = var.secret_aws_cloudwatch_user_secret_access_key
+      DB_SSL                           = false,
+      AWS_CLOUDWATCH_REGION            = "eu-west-2",
+      AWS_CLOUDWATCH_ACCESS_KEY_ID     = var.secret_aws_cloudwatch_user_access_key_id,
+      AWS_CLOUDWATCH_SECRET_ACCESS_KEY = var.secret_aws_cloudwatch_user_secret_access_key,
     }
-  )
+  ))
 
   tags = {
     "Name" = "cloud-tracker-launch-template"
