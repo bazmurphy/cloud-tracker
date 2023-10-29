@@ -27,3 +27,15 @@
 #   type        = string
 #   sensitive   = true
 # }
+
+variable "secret_aws_cloudwatch_user_access_key_id" {
+  description = "value"
+  type        = string
+  sensitive   = true
+}
+
+variable "secret_aws_cloudwatch_user_secret_access_key" {
+  description = "value"
+  type        = string
+  sensitive   = true
+}

@@ -39,6 +39,9 @@ POSTGRES_USER=${POSTGRES_USER}
 POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 DB_CONNECTION_STRING=${DB_CONNECTION_STRING}  
 DB_SSL=${DB_SSL}
+AWS_CLOUDWATCH_REGION=${aws.region}
+AWS_CLOUDWATCH_ACCESS_KEY_ID=${var.secret_aws_cloudwatch_user_access_key_id}
+AWS_CLOUDWATCH_SECRET_ACCESS_KEY=${var.secret_aws_cloudwatch_secret_access_key}
 EOF
 # run docker compose
 docker-compose up -d
