@@ -8,27 +8,34 @@ import {
   getSpecificTraineeSpecificCoursework,
   putSpecificTraineeSpecificCoursework,
 } from "../controllers/trackerController";
+import { measureLatencyMiddleware } from "../middleware/measureLatencyMiddleware";
 import { Request, Response } from "express";
 
 export const trackerRouter = express.Router();
 
 // define where the static folder exists ../../public
-trackerRouter.use(express.static(path.join(__dirname, "..", "..", "public")));
+trackerRouter.use(express.static(path.join(__dirname, "../../public")));
 
 // serve the ../../public/index.html to /api (instead of /)
 trackerRouter.get("/", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "..", "..", "public", "index.html"));
+  res.sendFile(path.join(__dirname, "../../public/index.html"));
 });
 
-trackerRouter.get("/trainees", getAllTrainees);
-trackerRouter.get("/weeks", getAllWeeks);
-trackerRouter.get("/coursework", getAllCoursework);
-trackerRouter.get("/trainee-coursework", getAllTraineeCoursework);
+trackerRouter.get("/trainees", measureLatencyMiddleware, getAllTrainees);
+trackerRouter.get("/weeks", measureLatencyMiddleware, getAllWeeks);
+trackerRouter.get("/coursework", measureLatencyMiddleware, getAllCoursework);
+trackerRouter.get(
+  "/trainee-coursework",
+  measureLatencyMiddleware,
+  getAllTraineeCoursework
+);
 trackerRouter.get(
   "/trainee-coursework/trainee=:traineeId&coursework=:courseworkId",
+  measureLatencyMiddleware,
   getSpecificTraineeSpecificCoursework
 );
 trackerRouter.put(
   "/trainee-coursework/trainee=:traineeId&coursework=:courseworkId",
+  measureLatencyMiddleware,
   putSpecificTraineeSpecificCoursework
 );
