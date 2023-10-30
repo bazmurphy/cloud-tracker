@@ -1,5 +1,5 @@
-# use node version18
-FROM node:18-alpine
+# use node version20
+FROM node:20-alpine
 
 # start from the /backend folder
 WORKDIR /backend

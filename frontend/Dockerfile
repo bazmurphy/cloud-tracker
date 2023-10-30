@@ -1,5 +1,5 @@
-# use node version 18, give it an alias to reference later for nginx
-FROM node:18-alpine AS frontend-build
+# use node version 20, give it an alias to reference later for nginx
+FROM node:20-alpine AS frontend-build
 
 # start from the /frontend folder
 WORKDIR /frontend
@@ -21,6 +21,11 @@ COPY . .
 
 # Debug: Print the value of VITE_API_URL during the build process
 # RUN echo "VITE_API_URL is $VITE_API_URL"
+
+# set the ec2 instance internal ip dynamically to display on the frontend
+ARG VITE_EC2_INTERNAL_IP
+ENV VITE_EC2_INTERNAL_IP=$EC2_INTERNAL_IP
+RUN echo "VITE_EC2_INTERNAL_IP is $VITE_EC2_INTERNAL_IP"
 
 # run the typescript compiler to output to /dist/
 RUN npm run build

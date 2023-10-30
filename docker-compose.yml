@@ -1,7 +1,6 @@
 version: "3"
 
 # Adjusted Local Images version in favour of DockerHub hosted Images
-
 services:
   database:
     container_name: database
@@ -33,6 +32,8 @@ services:
     image: bazmurphy/cloud-tracker-frontend:latest
     depends_on:
       - backend
+    environment:
+      - VITE_EC2_INTERNAL_IP=${VITE_EC2_INTERNAL_IP}
     ports:
       - "80:80"
 

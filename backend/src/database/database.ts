@@ -15,5 +15,7 @@ database.connect((error, client) => {
     );
   }
   console.log("Success: Connected To PostgreSQL Database");
-  client.release();
+  if (client) {
+    client.release();
+  }
 });
