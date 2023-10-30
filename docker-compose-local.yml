@@ -8,7 +8,7 @@ services:
     build:
       context: ./database
       dockerfile: database.Dockerfile
-      args:
+      environment:
         - POSTGRES_USER=${POSTGRES_USER}
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
@@ -25,12 +25,13 @@ services:
     build:
       context: ./backend
       dockerfile: backend.Dockerfile
-      args:
+      environment:
         - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
         - DB_SSL=${DB_SSL}
         - AWS_CLOUDWATCH_REGION=$AWS_CLOUDWATCH_REGION
         - AWS_CLOUDWATCH_ACCESS_KEY_=$AWS_CLOUDWATCH_ACCESS_KEY_
         - AWS_CLOUDWATCH_SECRET_ACCESS_KEY=$AWS_CLOUDWATCH_SECRET_ACCESS_KEY
+        - EC2_INTERNAL_IP=${EC2_INTERNAL_IP}
     ports:
       - "4000:4000"
 
@@ -43,9 +44,8 @@ services:
     build:
       context: ./frontend
       dockerfile: frontend.Dockerfile
-      args:
-        # - VITE_API_URL=${VITE_API_URL}
-        - VITE_EC2_INTERNAL_IP=${VITE_EC2_INTERNAL_IP}
+      # args:
+      # - VITE_API_URL=${VITE_API_URL}
     ports:
       - "80:80"
 

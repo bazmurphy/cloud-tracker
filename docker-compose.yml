@@ -24,6 +24,7 @@ services:
       - AWS_CLOUDWATCH_REGION=${AWS_CLOUDWATCH_REGION}
       - AWS_CLOUDWATCH_ACCESS_KEY_ID=${AWS_CLOUDWATCH_ACCESS_KEY_ID}
       - AWS_CLOUDWATCH_SECRET_ACCESS_KEY=${AWS_CLOUDWATCH_SECRET_ACCESS_KEY}
+      - EC2_INTERNAL_IP=${EC2_INTERNAL_IP}
     ports:
       - "4000:4000"
 
@@ -32,8 +33,6 @@ services:
     image: bazmurphy/cloud-tracker-frontend:latest
     depends_on:
       - backend
-    environment:
-      - VITE_EC2_INTERNAL_IP=${VITE_EC2_INTERNAL_IP}
     ports:
       - "80:80"
 

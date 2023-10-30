@@ -193,7 +193,6 @@ export const putSpecificTraineeSpecificCoursework = async (
   }
 };
 
-export const getClientIP = async (req: Request, res: Response) => {
-  const clientIP = req.socket.remoteAddress;
-  res.json({ clientIP: clientIP });
+export const getInternalIP = async (req: Request, res: Response) => {
+  res.json({ payload: process.env.EC2_INTERNAL_IP });
 };

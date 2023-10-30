@@ -13,19 +13,13 @@ RUN npm install
 # copy the rest of the files across
 COPY . .
 
+# (!) ARG is used during the build image process (baked in), whereas ENV is used when running the container (dynamic)
+
 # define the arguments being passed to the Docker Run Command
 # ARG VITE_API_URL
 
-# set the localised Environment Variables as those arguments
-# ENV VITE_API_URL=$VITE_API_URL
-
-# Debug: Print the value of VITE_API_URL during the build process
+# Debug: Print the value of VITE_API_URL
 # RUN echo "VITE_API_URL is $VITE_API_URL"
-
-# set the ec2 instance internal ip dynamically to display on the frontend
-ARG VITE_EC2_INTERNAL_IP
-ENV VITE_EC2_INTERNAL_IP=$VITE_EC2_INTERNAL_IP
-RUN echo "VITE_EC2_INTERNAL_IP is $VITE_EC2_INTERNAL_IP"
 
 # run the typescript compiler to output to /dist/
 RUN npm run build

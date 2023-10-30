@@ -7,7 +7,7 @@ import {
   getAllTraineeCoursework,
   getSpecificTraineeSpecificCoursework,
   putSpecificTraineeSpecificCoursework,
-  getClientIP,
+  getInternalIP,
 } from "../controllers/trackerController";
 import { measureLatencyMiddleware } from "../middleware/measureLatencyMiddleware";
 import { Request, Response } from "express";
@@ -41,4 +41,4 @@ trackerRouter.put(
   putSpecificTraineeSpecificCoursework
 );
 
-trackerRouter.get("/get-client-ip", getClientIP);
+trackerRouter.get("/internal-ip", getInternalIP);

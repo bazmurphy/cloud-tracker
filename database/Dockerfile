@@ -1,11 +1,13 @@
 # use the postgres 15 image
 FROM postgres:15-alpine
 
-# define the arguments being passed to the Docker Run Command
-ARG POSTGRES_USER
-ARG POSTGRES_PASSWORD
+# (!) ARG is used during the build image process (baked in), whereas ENV is used when running the container (dynamic)
 
-# set the localised Environment Variables as those arguments
+# define the arguments being passed to the Docker Run Command
+# ARG POSTGRES_USER
+# ARG POSTGRES_PASSWORD
+
+# set the localised Environment Variables
 ENV POSTGRES_USER=$POSTGRES_USER
 ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 
