@@ -43,8 +43,9 @@ services:
     build:
       context: ./frontend
       dockerfile: frontend.Dockerfile
-      # args:
-      # - VITE_API_URL=${VITE_API_URL}
+      args:
+        # - VITE_API_URL=${VITE_API_URL}
+        - VITE_EC2_INTERNAL_IP=${VITE_EC2_INTERNAL_IP}
     ports:
       - "80:80"
 

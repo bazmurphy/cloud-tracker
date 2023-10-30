@@ -24,7 +24,7 @@ COPY . .
 
 # set the ec2 instance internal ip dynamically to display on the frontend
 ARG VITE_EC2_INTERNAL_IP
-ENV VITE_EC2_INTERNAL_IP=$EC2_INTERNAL_IP
+ENV VITE_EC2_INTERNAL_IP=$VITE_EC2_INTERNAL_IP
 RUN echo "VITE_EC2_INTERNAL_IP is $VITE_EC2_INTERNAL_IP"
 
 # run the typescript compiler to output to /dist/

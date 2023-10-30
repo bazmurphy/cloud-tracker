@@ -61,15 +61,15 @@ export const measureLatencyMiddleware = (
 
     try {
       const response = await cloudWatchClient.send(command);
-      console.log(
-        "cloudWatchMiddleware > cloudWatchClient send(command) > response:",
-        response
-      );
+      // console.log(
+      //   "cloudWatchMiddleware > cloudWatchClient send(command) > response:",
+      //   response
+      // );
     } catch (error: any) {
-      console.error(
-        "cloudWatchMiddleware > cloudWatchClient send(command) > error"
-      ),
-        error.message;
+      // console.error(
+      //   "cloudWatchMiddleware > cloudWatchClient send(command) > error"
+      // ),
+      error.message;
     }
   });
 
